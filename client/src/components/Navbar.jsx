@@ -23,11 +23,11 @@ const Navbar = () => {
           onClick={()=> setIsOpen(!isOpen)}
         />
 
-        <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to="/">Home</Link>
-        <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to="/movies">Movies</Link>
-        <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to="/theaters">Theaters</Link>
-        <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to="/releases">Releases</Link>
-        <Link onClick={()=> {scrollTo(0,0), setIsOpen(false)}} to="/favorites">Favorites</Link>
+        <Link onClick={()=> {scrollTo(0,0); setIsOpen(false)}} to="/">Home</Link>
+        <Link onClick={()=> {scrollTo(0, 0); setIsOpen(false)}} to="/movies">Movies</Link>
+        <Link onClick={()=> {scrollTo(0,0); setIsOpen(false)}} to="/theaters">Theaters</Link>
+        <Link onClick={()=> {scrollTo(0,0); setIsOpen(false)}} to="/releases">Releases</Link>
+        <Link onClick={()=> {scrollTo(0,0); setIsOpen(false)}} to="/favorites">Favorites</Link>
       </div>
       <div className="flex items-center gap-8">
         <SearchIcon className="max-md:hidden w-6 h-6 cursor-pointer"/>

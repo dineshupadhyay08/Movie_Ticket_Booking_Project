@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from 'lucide-react'
 import React from 'react'
 import BlurCircle from './BlurCircle'
+import { Navigate } from 'react-router'
 
 const FeaturedSection = () => {
   return (
@@ -15,7 +16,10 @@ const FeaturedSection = () => {
          </button>
       </div>
       <div></div>
-      <div></div>
+      <div className='flex justify-center mt-20'>
+        <button onClick={()=> {Navigate('/movies'); scrollTo(0,0)}}
+        className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer'>Show more</button>
+      </div>
     </div>
   )
 }

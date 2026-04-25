@@ -1,19 +1,129 @@
 import React from "react";
+import { assets } from "../assets/assets";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-white/10 bg-black/40">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-6 py-8 md:px-16 lg:px-24">
-        <div>
-          <h2 className="text-lg font-semibold">Movie Ticket Counter</h2>
-          <p className="mt-2 max-w-2xl text-sm text-gray-400">
-            Book tickets, explore movies, and manage your favorites from one
-            place.
-          </p>
+    <footer class="bg-black py-12 px-4 sm:px-6 lg:px-8 mt-40 md:px-16">
+      <div class="w-full max-w-7xl mx-auto">
+        <div class="flex flex-wrap justify-between gap-y-12 lg:gap-x-8">
+          <div class="w-full md:w-[45%] lg:w-[35%] flex flex-col items-center md:items-start text-center md:text-left">
+            <img href="#" src={assets.logo}/>
+            <div class="w-full max-w-52 h-px mt-8 bg-linear-to-r from-black via-white/25 to-black"></div>
+            <p class="text-sm text-white/60 mt-6 max-w-sm leading-relaxed">
+              PrebuiltUI is a growing collection of beautifully designed,
+              production-ready Tailwind CSS UI components.
+            </p>
+            <div class="flex items-center gap-4">
+              <img src={assets.appStore} class="h-10 mt-6 cursor-pointer" />
+              <img src={assets.googlePlay} class="h-10 mt-6 cursor-pointer ml-4" />
+            </div>
+          </div>
+
+          <div class="w-full md:w-[45%] lg:w-[15%] flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 class="text-sm text-white font-medium">Important Links</h3>
+            <div class="flex flex-col gap-2 mt-6">
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                Home
+              </a>
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                About
+              </a>
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                Portfolio
+              </a>
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                Contact
+              </a>
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                FAQ
+              </a>
+            </div>
+          </div>
+
+          <div class="w-full md:w-[45%] lg:w-[15%] flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 class="text-sm text-white font-medium">Social Links</h3>
+            <div class="flex flex-col gap-2 mt-6">
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                Twitter
+              </a>
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                Instagram
+              </a>
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                Youtube
+              </a>
+              <a
+                href="#"
+                class="text-sm text-white/60 hover:text-white transition-colors"
+              >
+                Linkedin
+              </a>
+            </div>
+          </div>
+
+          <div class="w-full md:w-[45%] lg:w-[25%] flex flex-col items-center md:items-start text-center md:text-left">
+            <h3 class="text-sm text-white font-medium">Subscribe for news</h3>
+            <div class="flex items-center border gap-2 border-white/20 h-13 max-w-80 w-full rounded-full overflow-hidden mt-4">
+              <input
+                type="email"
+                placeholder="Enter your email.."
+                class="w-full h-full pl-6 outline-none text-sm bg-transparent text-white placeholder-white/60 placeholder:text-xs"
+                required
+              />
+              <button
+                type="submit"
+                class="bg-linear-to-b from-[#5623D8] to-[#7B53E2] active:scale-95 transition w-56 h-10 rounded-full text-sm text-white cursor-pointer mr-1.5"
+              >
+                Subscribe
+              </button>
+            </div>
+          </div>
         </div>
-        <p className="text-xs text-gray-500">
-          © 2026 Movie Ticket Counter. All rights reserved.
-        </p>
+
+        <div class="w-full h-px mt-16 mb-4 bg-linear-to-r from-black via-white/25 to-black"></div>
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-white/60">© 2025 PrebuiltUI</p>
+          <div class="flex items-center gap-6">
+            <a
+              href="#"
+              class="text-xs text-white/60 hover:text-white transition-colors"
+            >
+              Terms & Conditions
+            </a>
+            <div class="w-px h-4 bg-white/20"></div>
+            <a
+              href="#"
+              class="text-xs text-white/60 hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   );

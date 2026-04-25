@@ -10,7 +10,7 @@ const Footer = () => {
             <img href="#" src={assets.logo}/>
             <div class="w-full max-w-52 h-px mt-8 bg-linear-to-r from-black via-white/25 to-black"></div>
             <p class="text-sm text-white/60 mt-6 max-w-sm leading-relaxed">
-              PrebuiltUI is a growing collection of beautifully designed,
+              CinaMagic is a growing collection of beautifully designed,
               production-ready Tailwind CSS UI components.
             </p>
             <div class="flex items-center gap-4">
@@ -107,7 +107,7 @@ const Footer = () => {
         <div class="w-full h-px mt-16 mb-4 bg-linear-to-r from-black via-white/25 to-black"></div>
 
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p class="text-xs text-white/60">© 2025 PrebuiltUI</p>
+          <p class="text-xs text-white/60">© 2025 CinaMagic</p>
           <div class="flex items-center gap-6">
             <a
               href="#"

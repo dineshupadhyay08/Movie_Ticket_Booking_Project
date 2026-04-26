@@ -20,8 +20,8 @@ const MoviesDetails = () => {
 
   return show ? (
     <div className='px-6 md:px-16 lg:px-40 pt-30 md:pt-50'>
-      <div>
-        <img src={show.movie.poster_path} alt='' className=''/>
+      <div className='flex flex-col md:flex-row gap-8 max-w-6xl mx-auto'>
+        <img src={show.movie.poster_path} alt='' className='max-md:mx-auto rounded-xl h1-104 max-w-70 object-cover'/>
       </div>
     </div>
   ) :  <div>Loading...</div>

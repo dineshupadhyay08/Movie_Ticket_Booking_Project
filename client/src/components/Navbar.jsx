@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { MenuIcon, SearchIcon, TicketPlus, XIcon } from "lucide-react";
 import { useClerk, UserButton, useUser } from "@clerk/react";
@@ -27,7 +27,7 @@ const Navbar = () => {
         <Link onClick={()=> {scrollTo(0, 0); setIsOpen(false)}} to="/movies">Movies</Link>
         <Link onClick={()=> {scrollTo(0,0); setIsOpen(false)}} to="/theaters">Theaters</Link>
         <Link onClick={()=> {scrollTo(0,0); setIsOpen(false)}} to="/releases">Releases</Link>
-        <Link onClick={()=> {scrollTo(0,0); setIsOpen(false)}} to="/favorites">Favorites</Link>
+        <Link onClick={()=> {scrollTo(0,0); setIsOpen(false)}} to="/favorite">Favorites</Link>
       </div>
       <div className="flex items-center gap-8">
         <SearchIcon className="max-md:hidden w-6 h-6 cursor-pointer"/>
@@ -37,7 +37,7 @@ const Navbar = () => {
           ) : (
             <UserButton>
               <UserButton.MenuItems>
-                <UserButton.Action label="My Booking" labelIcon={<TicketPlus width={15}/>} onClick={()=> navigate("/my-booking")}/>
+                <UserButton.Action label="My Booking" labelIcon={<TicketPlus width={15}/>} onClick={()=> navigate("/my-bookings")}/>
               </UserButton.MenuItems>
             </UserButton>
           )

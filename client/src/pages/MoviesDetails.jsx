@@ -46,11 +46,12 @@ const MoviesDetails = () => {
             {timeFormat(show.movie.runtime)} •{" "}
             {show.movie.genres.map((genre) => genre.name).join(", ")} • {show.movie.release_date.split("-")[0]}
           </p>
-          <div className=''>
-            <button>
+          <div className='flex items-center flex-wrap gap-4 mt-4'>
+            <button className='flex items-center gap-2
+            px7 py-3 text-sm bg-gray-800 hover:bg-gray-900 transition rounded-md font-medium cursor-pointer active:scale-95'>
               <PlayCircleIcon className='w-5 h-5'/>
               Watch Trailer</button>
-            <a href="">Buy Tickets</a>
+            <a href="" className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95'>Buy Tickets</a>
             <button>
               <Heart className={`w-5 h-5`}/>
             </button>

@@ -59,7 +59,7 @@ const MoviesDetails = () => {
               <span>Watch Trailer</span>
             </button>
             <a
-              href=""
+              href="#dateselect"
               className="px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95"
             >
               Buy Tickets
@@ -70,6 +70,12 @@ const MoviesDetails = () => {
           </div>
         </div>
       </div>
+      <p>
+        Your Favorite Cast
+        <div className='overflow-x-auto no-scrollbar mt-8 pb-4'>
+
+        </div>
+      </p>
     </div>
   ) : (
     <div>Loading...</div>

@@ -5,6 +5,7 @@ import BlurCircle from '../components/BlurCircle'
 import { Heart, PlayCircleIcon, StarIcon } from 'lucide-react'
 import timeFormat from '../lib/timeFormat'
 import { div } from 'framer-motion/client'
+import DateSection from '../components/DateSection'
 
 const MoviesDetails = () => {
   const {id} = useParams()
@@ -71,20 +72,22 @@ const MoviesDetails = () => {
           </div>
         </div>
       </div>
-      <p>
-        Your Favorite Cast
-        <div className='overflow-x-auto no-scrollbar mt-8 pb-4'>
-          <div className='flex items-center gap-4 w-max px-4'>
-            {show.movie.casts.slice(0,12).map((cast, index)=>(
-              <div key={index}>
-                <img src={cast.profile_path} alt='' className='rounded-full h-20 md:h-20 aspect-square object-cover'/>
-                <p className='font-medium text-xs mt-3'>{cast.name}</p>
-              </div>
-            ))}
-
-          </div>
+      <p>Your Favorite Cast </p>
+      <div className="overflow-x-auto no-scrollbar mt-8 pb-4">
+        <div className="flex items-center gap-4 w-max px-4">
+          {show.movie.casts.slice(0, 12).map((cast, index) => (
+            <div key={index}>
+              <img
+                src={cast.profile_path}
+                alt=""
+                className="rounded-full h-20 md:h-20 aspect-square object-cover"
+              />
+              <p className="font-medium text-xs mt-3">{cast.name}</p>
+            </div>
+          ))}
         </div>
-      </p>
+      </div>
+      <DateSection dateTime={show.dateTime} id={id}/>
     </div>
   ) : (
     <div>Loading...</div>

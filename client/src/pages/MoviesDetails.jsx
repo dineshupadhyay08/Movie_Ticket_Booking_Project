@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { dummyDateTimeData, dummyShowsData } from '../assets/assets'
 import BlurCircle from '../components/BlurCircle'
 import { Heart, PlayCircleIcon, StarIcon } from 'lucide-react'
@@ -9,8 +9,16 @@ import DateSection from '../components/DateSection'
 import MovieCard from '../components/MovieCard'
 
 const MoviesDetails = () => {
+  const navigate = useNavigate()
   const {id} = useParams()
   const [show, setShow] = useState(null)
+
+  const scrollToDateSection = () => {
+    document.getElementById('dateSelect')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }
 
   const getShow = async () => {
     const show = dummyShowsData.find(show => show._id === id)
@@ -61,12 +69,12 @@ const MoviesDetails = () => {
               <PlayCircleIcon className="w-5 h-5" />
               <span>Watch Trailer</span>
             </button>
-            <a
-              href="#dateselect"
+            <button
+              onClick={scrollToDateSection}
               className="px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95"
             >
               Buy Tickets
-            </a>
+            </button>
             <button className="bg-gray-700 p-2.5 rounded-full transition cursor-pointer active:scale-95">
               <Heart className={`w-5 h-5`} />
             </button>
@@ -94,11 +102,11 @@ const MoviesDetails = () => {
       </p>
       <div className='flex flex-wrap max-sm:justify-center gap-8'>
           {dummyShowsData.slice(0, 6).map((show, index)=>(
-            <MovieCard key={index} show={show}/>
+            <MovieCard key={index} movie={show}/>
           ))}
       </div>
       <div className='flex justify-center mt-20'>
-          <button className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer'>Show more</button>
+          <button onClick={() => navigate('/movies')} className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer'>Show more</button>
       </div>
     </div>
   ) : (

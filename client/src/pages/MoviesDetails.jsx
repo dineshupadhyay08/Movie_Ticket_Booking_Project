@@ -22,6 +22,12 @@ const MoviesDetails = () => {
 
   const getShow = async () => {
     const show = dummyShowsData.find(show => show._id === id)
+    if(show){
+      setShow({
+        movie: show,
+        dateTime: dummyDateTimeData
+      })
+    }
     setShow({
       movie: show,
       dateTime: dummyDateTimeData

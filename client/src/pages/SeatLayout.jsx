@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { dummyShowsData } from '../assets/assets'
 import Loading from '../components/Loading'
+import { div } from 'framer-motion/client'
+import { ClockIcon } from 'lucide-react'
 
 const SeatLayout = () => {
 
@@ -31,6 +33,12 @@ const SeatLayout = () => {
       <div className='w-60 bg-primary/10 border-primary/20 rounded-lg py-10 h-max md:sticky md:to-pink-30'>
       <p className='text-lg font-semibold px-6'>Available Timings</p>
       </div>
+      {show.dateTime[date].map((time) => (
+        <div className={`flex items-center gap-2 px-6 py-2 w-max rounded-r-md cursor-pointer transition ${selectedTime?.time === item.time ? "bg-primary text-white" : "hover:bg-primary/20"}`}>
+          <ClockIcon className='w-4 h-4'/>
+          <p className='text-sm'>{item.time}</p>
+        </div>
+      ))}
       
     </div>
   ) : (

@@ -28,6 +28,9 @@ const SeatLayout = () => {
 
   return show ? (
     <div className='flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50'>
+      <div className='w-60 bg-primary/10 border-primary/20 rounded-lg py-10 h-max md:sticky md:to-pink-30'>
+      <p className='text-lg font-semibold px-6'>Available Timings</p>
+      </div>
       
     </div>
   ) : (

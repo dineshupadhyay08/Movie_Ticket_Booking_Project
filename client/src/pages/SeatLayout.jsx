@@ -1,7 +1,20 @@
-import React from "react";
+import React from 'react'
 
 const SeatLayout = () => {
-  return <div></div>;
-};
 
-export default SeatLayout;
+  const {id, date} = useParams()
+  const [selectedSeats, setSelectedSeats] = useState([])
+  const [selectedTime, setSelectedTime] = useState(null)
+  const [Show, setShow] = useState(null)
+  const navigate = useNavigate()
+
+
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+export default SeatLayout
+

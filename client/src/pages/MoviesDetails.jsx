@@ -7,6 +7,7 @@ import timeFormat from '../lib/timeFormat'
 import { div } from 'framer-motion/client'
 import DateSection from '../components/DateSection'
 import MovieCard from '../components/MovieCard'
+import Loading from '../components/Loading'
 
 const MoviesDetails = () => {
   const navigate = useNavigate()
@@ -21,18 +22,17 @@ const MoviesDetails = () => {
   }
 
   const getShow = async () => {
-    const show = dummyShowsData.find(show => show._id === id)
-    if(show){
+    const foundShow = dummyShowsData.find((show) => show._id === id);
+
+    if (foundShow) {
       setShow({
-        movie: show,
-        dateTime: dummyDateTimeData
-      })
+        movie: foundShow,
+        dateTime: dummyDateTimeData,
+      });
+    } else {
+      setShow(null); // optional safety
     }
-    setShow({
-      movie: show,
-      dateTime: dummyDateTimeData
-    })
-  }
+  };
 
   useEffect(() => {
     getShow()
@@ -116,7 +116,7 @@ const MoviesDetails = () => {
       </div>
     </div>
   ) : (
-    <div>Loading...</div>
+    <Loading/>
   );
 }
 

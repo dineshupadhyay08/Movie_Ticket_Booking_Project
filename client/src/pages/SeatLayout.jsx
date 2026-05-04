@@ -26,6 +26,22 @@ const SeatLayout = () => {
     }
   }
 
+  const renderSeats = (row, count=9) => {
+    <div key={row} className='flex gap-2 mt-2'>
+      <div className='flex flex-wrap items-center justify-center gap-2'>
+        {Array.from({ length: count }, (_, i) =>{
+          const seatId = `${row}${i + 1}`;
+          return(
+            <button key={seatId} onClick={()=> handleSeatClick(seatId)} className={`h-8 w-8 rounded border border-primary/60 cursor-pointer ${selectedSeats.includes(seatId) && "bg-primary text-white"}`}>
+              {seatId}
+            </button>
+          )
+        })}
+
+      </div>
+    </div>
+  }
+
   useEffect(() => {
     getShow()
   }, [id])

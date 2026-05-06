@@ -29,15 +29,21 @@ const SeatLayout = () => {
     }
   }
 
-  const handleSeatClick = (seatId) =>{
-    if(!selectedTime){
-      return toast("Please Select time first")
+  const handleSeatClick = (seatId) => {
+    if (!selectedTime) {
+      return toast.error("Please select time first");
     }
-    if(!selectedSeats.includes(seatId) && selectedSeats.length > 4){
-      return toast("You can only select 5 sears")
+
+    if (!selectedSeats.includes(seatId) && selectedSeats.length >= 5) {
+      return toast.error("You can only select 5 seats");
     }
-    setSelectedSeats(prev => prev.includes(seatId) ? prev.filter(seat => seat !== seatId) : [...prev, seatId])
-  }
+
+    setSelectedSeats((prev) =>
+      prev.includes(seatId)
+        ? prev.filter((seat) => seat !== seatId)
+        : [...prev, seatId],
+    );
+  };
 
   const renderSeats = (row, count = 9) => {
     return (

@@ -5,7 +5,7 @@ import { ClockIcon } from 'lucide-react'
 import { useParams } from 'react-router'
 import isoTimeFormat from '../lib/isoTimeFormat'
 import BlurCircle from '../components/BlurCircle'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 
 const SeatLayout = () => {
 

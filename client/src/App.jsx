@@ -8,7 +8,6 @@ import SeatLayout from "./pages/SeatLayout";
 import MyBookings from "./pages/MyBookings";
 import Favorite from "./pages/Favorite";
 import {Toaster} from "react-hot-toast";
-import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer";
 
 const App = () => {

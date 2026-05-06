@@ -77,48 +77,42 @@ const SeatLayout = () => {
     <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">
       <div className="w-60 bg-primary/10 border-primary/20 rounded-lg py-10 h-max md:sticky md:to-pink-30">
         <p className="text-lg font-semibold px-6">Available Timings</p>
-        <div className='mt-5 space-y-1'>
-
-      {show?.dateTime?.[data]?.map((time, index) => (
-        <div
-        key={index}
-        className={`flex items-center gap-2 px-6 py-2 w-max rounded-r-md cursor-pointer transition ${
-          selectedTime?.time === time.time
-          ? "bg-primary text-white"
-          : "hover:bg-primary/20"
-        }`}
-        onClick={() => setSelectedTime(time)}
-        >
-        <ClockIcon className="w-4 h-4" />
-        <p className="text-sm">
-          {isoTimeFormat(time.time)}
-        </p>
-      </div>
-    ))}
-    </div>
-    </div>
-
-      <div className='relative flex-1 flex flex-col items-center max-md:mt-16'>
-        <BlurCircle top='-100px' left='-100px'/>
-        <BlurCircle bottom='0' right='-0'/>
-        <h1 className='text-2xl font-semibold mb-4'>Select your seat</h1>
-        <img src={assets.screenImage} alt='screen'/>
-        <p className='text-gray-400 text-sm mb-6'>SCREEN SIDE</p>
-
-        <div className='flex flex-col items-center mt-10 text-xs text-gray-300'>
-          <div className='grid grid-cols-2 md:grid-cols-1 gap-8 md:gap-2 mb-6'>
-            {groupRows[0].map(row => renderSeats(row))}
-          </div>
-        <div className='grid grid-cols-2 gap-10'>
-          {groupRows.slice(1).map((group,idx)=>(
-            <div key={idx}>
-              {group.map(row => renderSeats(row))}
+        <div className="mt-5 space-y-1">
+          {show?.dateTime?.[date]?.map((time, index) => (
+            <div
+              key={index}
+              className={`flex items-center gap-2 px-6 py-2 w-max rounded-r-md cursor-pointer transition ${
+                selectedTime?.time === time.time
+                  ? "bg-primary text-white"
+                  : "hover:bg-primary/20"
+              }`}
+              onClick={() => setSelectedTime(time)}
+            >
+              <ClockIcon className="w-4 h-4" />
+              <p className="text-sm">{isoTimeFormat(time.time)}</p>
             </div>
           ))}
         </div>
-        </div>
       </div>
 
+      <div className="relative flex-1 flex flex-col items-center max-md:mt-16">
+        <BlurCircle top="-100px" left="-100px" />
+        <BlurCircle bottom="0" right="-0" />
+        <h1 className="text-2xl font-semibold mb-4">Select your seat</h1>
+        <img src={assets.screenImage} alt="screen" />
+        <p className="text-gray-400 text-sm mb-6">SCREEN SIDE</p>
+
+        <div className="flex flex-col items-center mt-10 text-xs text-gray-300">
+          <div className="grid grid-cols-2 md:grid-cols-1 gap-8 md:gap-2 mb-6">
+            {groupRows[0].map((row) => renderSeats(row))}
+          </div>
+          <div className="grid grid-cols-2 gap-10">
+            {groupRows.slice(1).map((group, idx) => (
+              <div key={idx}>{group.map((row) => renderSeats(row))}</div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   ) : (
     <Loading />

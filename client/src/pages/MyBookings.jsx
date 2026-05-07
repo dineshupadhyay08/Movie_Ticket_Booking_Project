@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { dummyBookingData } from '../assets/assets'
+import Loading from '../components/Loading'
+import BlurCircle from '../components/BlurCircle'
+import { IterationCcw } from 'lucide-react'
 
 const MyBookings = () => {
   const currency = import.meta.env.VITE_CURRENCY  
@@ -10,12 +13,27 @@ const MyBookings = () => {
     setBooking(dummyBookingData)
     setIsLoding(false)
   }
-  
-  return (
-    <div>
-      
+
+  useEffect(()=>{
+    getMyBooking()
+  },[])
+  return !isLoding ? (
+    <div className='relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]'>
+      <BlurCircle top='0px' left='100px'/>
+      <div>
+        <BlurCircle bottom='0px' left='600px'/>
+      </div>
+      <h1 className='text-lg font-semibold mb-4'>My Booking</h1>
+      {booking.map(()=>(
+        <div key={index} className='flex flex-col md:flex-row justify-between bg-primary/8 border border-primary/20 rounded-lg mt-4 p-2 max-w-3xl'>
+          <div className='flex flex-col md:flex-row'>
+            <img src={IterationCcw}/>
+          </div>
+
+        </div>
+      ))}
     </div>
-  )
+  ) : <Loading/>
 }
 
 export default MyBookings

@@ -30,7 +30,7 @@ const MyBookings = () => {
             <img src={moveItem.show.movie.poster_path} alt='' className='md:max-w-4/5 aspect-video h-auto object-cover object-bottom rounded '/>
             <div className='flex flex-col p-4'>
               <p className='text-lg font-semibold'>{item.show.movie.title}</p>
-              <p className='text-gray-400'>{item.show.movie.title}</p>
+              <p className='text-gray-400 text-sm'>{item.show.movie.title}</p>
             </div>
           </div>
 

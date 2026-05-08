@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { dummyBookingData } from '../assets/assets'
 import Loading from '../components/Loading'
 import BlurCircle from '../components/BlurCircle'
+import { dateFormat } from '../lib/dateFormat'
 
 const MyBookings = () => {
   const currency = import.meta.env.VITE_CURRENCY  
@@ -27,21 +28,22 @@ const MyBookings = () => {
       {booking.map((item, index) => (
         <div
           key={index}
-          className="flex flex-col md:flex-row justify-between bg-primary/8 border border-primary/20 rounded-lg mt-4 p-2 max-w-3xl"
+          className="flex items-center gap-3 bg-primary/8 border border-primary/20 rounded-md mt-3 p-2 w-full max-w-2xl"
         >
-          <div className="flex flex-col md:flex-row">
-            <img
-              src={item.show.movie.poster_path}
-              alt=""
-              className="md:max-w-4/5 aspect-video h-auto object-cover object-bottom rounded "
-            />
-            <div className="flex flex-col p-4">
-              <p className="text-lg font-semibold">{item.show.movie.title}</p>
-              <p className="text-gray-400 text-sm">{item.show.movie.runtime}</p>
-              <p className="text-gray-400 text-sm mt-auto">
-                {item.show.movie.showDateTime}
-              </p>
-            </div>
+          <img
+            src={item.show.movie.poster_path}
+            alt=""
+            className="w-20 h-28 object-cover rounded"
+          />
+
+          <div className="flex flex-col">
+            <p className="text-sm font-semibold">{item.show.movie.title}</p>
+
+            <p className="text-gray-400 text-xs">{item.show.movie.runtime}</p>
+
+            <p className="text-gray-400 text-xs">
+              {dateFormat(item.show.showDateTime)}
+            </p>
           </div>
         </div>
       ))}

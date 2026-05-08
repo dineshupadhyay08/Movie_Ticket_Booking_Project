@@ -45,6 +45,14 @@ const MyBookings = () => {
               {dateFormat(item.show.showDateTime)}
             </p>
           </div>
+          <div className=''>
+            <div>
+              <p>{currency}{item.amount}</p>
+              {!item.isPaid && <buton>Pay now</buton>}
+            </div>
+
+          </div>
+
         </div>
       ))}
     </div>

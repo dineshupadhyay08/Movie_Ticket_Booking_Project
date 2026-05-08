@@ -46,7 +46,7 @@ const MyBookings = () => {
             </p>
           </div>
           <div className='flex flex-col md:items-end md:text-right justify-between p-4'>
-            <div>
+            <div className='flex items-center gap-4'>
               <p>{currency}{item.amount}</p>
               {!item.isPaid && <buton>Pay now</buton>}
             </div>

@@ -36,23 +36,38 @@ const MyBookings = () => {
             className="w-20 h-28 object-cover rounded"
           />
 
-          <div className="flex flex-col">
+          <div className="flex flex-col whitespace-nowrap">
             <p className="text-sm font-semibold">{item.show.movie.title}</p>
 
             <p className="text-gray-400 text-xs">{item.show.movie.runtime}</p>
 
-            <p className="text-gray-400 text-xs">
+            <p className="text-gray-400 text-xs mt-3">
               {dateFormat(item.show.showDateTime)}
             </p>
           </div>
-          <div className='flex flex-col md:items-end md:text-right justify-between p-4'>
-            <div className='flex items-center gap-4'>
-              <p>{currency}{item.amount}</p>
-              {!item.isPaid && <buton>Pay now</buton>}
+          <div className="flex flex-col md:items-end md:text-right justify-between w-full p-4">
+            <div className="flex items-center gap-4">
+              <p className="text-2xl font-semibold mb-3">
+                {currency}
+                {item.amount}
+              </p>
+              {!item.isPaid && (
+                <buton className="bg-primary px-4 py-1.5 mb-3 text-sm rounded-full font-medium cursor-pointer">
+                  Pay now
+                </buton>
+              )}
             </div>
-
+            <div className="text-sm">
+              <p className="text-gray-400">
+                <span>Total Tickets:</span>
+                {item.bookedSeats.length}
+              </p>
+              <p className="text-gray-400">
+                <span>Seat Number:</span>
+                {item.bookedSeats.join(", ")}
+              </p>
+            </div>
           </div>
-
         </div>
       ))}
     </div>

@@ -10,6 +10,11 @@ const AdminSidebar = () => {
     lastName : "User",
     imageUrl : assets.profile,
   }
+  const user = {
+    firstName : "Admin",
+    lastName : "User",
+    imageUrl : assets.profile,
+  }
 
   const adminNavlinks = [
     {name: "Dashboard", path: "/admin", icon: LayoutDashboardIcon},

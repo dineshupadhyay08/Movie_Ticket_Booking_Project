@@ -2,6 +2,8 @@ import { ChartLineIcon, CircleDollarSignIcon, PlayCircleIcon, UserIcon } from 'l
 import React, { useEffect, useState } from 'react'
 import { dummyDashboardData } from '../../assets/assets'
 import Loading from '../../components/Loading'
+import Title from '../../components/Admin/Title'
+import BlurCircle from '../../components/BlurCircle'
 
 const Dashbooard = () => {
 
@@ -33,9 +35,21 @@ const Dashbooard = () => {
 
 
   return !loading ? (
-    <div>
-    
+    <>
+    <Title text1="Admin" text2="Dashboard"/>
+    <div className='relative flex flex-wrap gap-4 mt-6'>
+      <BlurCircle top='-100px' left='0'/>
+      <div className='flex flex-wrap gap-4 w-full'>
+        {dashboardCards.map((card, index) =>(
+          <div key={index} className='flex items-center justify-between px-4 py-3 bg-primary/10 border border-primary/20 rounded-md max-w-50 w-full'>
+
+          </div>
+        ))}
+
+      </div>
+
     </div>
+    </>
   ) : <Loading/>
 }
 

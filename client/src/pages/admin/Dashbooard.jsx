@@ -1,6 +1,7 @@
 import { ChartLineIcon, CircleDollarSignIcon, PlayCircleIcon, UserIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { dummyDashboardData } from '../../assets/assets'
+import Loading from '../../components/Loading'
 
 const Dashbooard = () => {
 
@@ -31,11 +32,11 @@ const Dashbooard = () => {
   },[]);
 
 
-  return (
+  return !loading ? (
     <div>
     
     </div>
-  )
+  ) : <Loading/>
 }
 
 export default Dashbooard

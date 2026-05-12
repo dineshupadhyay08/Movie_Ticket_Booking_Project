@@ -1,5 +1,6 @@
 import { ChartLineIcon, CircleDollarSignIcon, PlayCircleIcon, UserIcon } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { dummyDashboardData } from '../../assets/assets'
 
 const Dashbooard = () => {
 
@@ -20,6 +21,14 @@ const Dashbooard = () => {
     {title: "Active Shows", value: dashboardData.activeShows.length || "0", icon: PlayCircleIcon},
     {title: "Total Users", value: dashboardData.totalUser || "0", icon: UserIcon},
   ]
+
+  const fetchDashboardData = async () =>{
+    setDashboardData(dummyDashboardData)
+    setLoading(false)
+  };
+  useEffect(()=>{
+    fetchDashboardData();
+  },[]);
 
 
   return (

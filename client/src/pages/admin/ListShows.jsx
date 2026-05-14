@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { dummyShowsData } from '../../assets/assets'
 import Loading from '../../components/Loading'
 import Title from '../../components/Admin/Title'
-import { Currency } from 'lucide-react'
 import { dateFormat } from '../../lib/dateFormat'
 
 const ListShows = () => {
@@ -55,7 +54,7 @@ const ListShows = () => {
               <td className='p-2'>{dateFormat(show.showDateTime)}</td>
               <td className='p-2'>{Object.keys(show.occupiedSeats).length}</td>
               <td>
-                {Currency}{Object.keys(show.occupiedSeats).length * show.showPrice}
+                {currency}{Object.keys(show.occupiedSeats).length * show.showPrice}
               </td>
             </tr>
           ))}

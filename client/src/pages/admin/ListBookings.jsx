@@ -19,23 +19,26 @@ const ListBookings = () => {
     getAllBookings();
   },[]);
 
-  return ! isLoading ? (
+  return !isLoading ? (
     <>
-    <Title text1="List" text2="Booking"/>
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-    </table>
-      
+      <Title text1="List" text2="Booking" />
+      <div className="max-w-4xl mt-6 overflow-x-auto">
+        <table className="w-full border-collapse rounded-md overflow-hidden text-nowrap">
+          <thead>
+            <tr className="bg-primary/20 text-left text-white">
+              <th className="p-2 font-medium pl-5">User Name</th>
+              <th className="p-2 font-medium">Movie Name</th>
+              <th className="p-2 font-medium">Show Time</th>
+              <th className="p-2 font-medium">Seats</th>
+              <th className="p-2 font-medium">Amount</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </>
-  ) : <Loading/>
+  ) : (
+    <Loading />
+  );
 }
 
 export default ListBookings

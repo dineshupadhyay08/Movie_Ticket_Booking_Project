@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { dummyShowsData } from '../../assets/assets';
+import Loading from '../../components/Loading';
+import Title from '../../components/Admin/Title';
 
 const AddShows = () => {
   const currency = import.meta.env.VITE_CURRENCY
@@ -17,11 +19,11 @@ const AddShows = () => {
     fetchNowPlayingMovies();
   },[]);
 
-  return (
-    <div>
-      
-    </div>
-  )
+  return nowPlayingMovies.length > 0 ? (
+    <>
+     <Title text1="Add" text2="Shows" />
+    </>
+  ) : <Loading />
 }
 
 export default AddShows

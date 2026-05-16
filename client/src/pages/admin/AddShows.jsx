@@ -26,7 +26,7 @@ const AddShows = () => {
      <div className="overflow-x-auto pb-4">
       <div className='group flex flex-wrap gap-4'>
         {nowPlayingMovies.map((movie)=>(
-          <div key={movie.id}>
+          <div key={movie.id} className={`relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 translate-y-1 transition duration-300`}>
 
           </div>
         ))}

@@ -25,7 +25,9 @@ const AddShows = () => {
      <p className='mt-10 text-lg font-medium'>Now Playing Movies</p>
      <div className="overflow-x-auto pb-4">
       <div className='group flex flex-wrap gap-4'>
-
+        {nowPlayingMovies.map((movie)=>(
+          <div></div>
+        ))}
       </div>
 
      </div>

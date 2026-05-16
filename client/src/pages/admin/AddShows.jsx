@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { dummyShowsData } from '../../assets/assets';
 
 const AddShows = () => {
@@ -12,6 +12,10 @@ const AddShows = () => {
   const fetchNowPlayingMovies = async () =>{
     setNowPlayingMovies(dummyShowsData)
   }
+
+  useEffect(()=>{
+    fetchNowPlayingMovies();
+  },[]);
 
   return (
     <div>

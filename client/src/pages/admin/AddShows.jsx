@@ -24,6 +24,9 @@ const AddShows = () => {
      <Title text1="Add" text2="Shows" />
      <p className='mt-10 text-lg font-medium'>Now Playing Movies</p>
      <div className="overflow-x-auto pb-4">
+      <div className='group flex flex-wrap gap-4'>
+
+      </div>
 
      </div>
     </>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { dummyShowsData } from '../../assets/assets';
 import Loading from '../../components/Loading';
 import Title from '../../components/Admin/Title';
+import { FaStar } from "react-icons/fa";
 
 const AddShows = () => {
   const currency = import.meta.env.VITE_CURRENCY
@@ -38,7 +39,7 @@ const AddShows = () => {
                 />
                 <div className="text-sm flex items-center justify-between p-2 bg-black/70 w-full absolute bottom-0 left-0">
                   <p classname="flex items-center gap-1 text-gray-400">
-                    <StartIcon classname="w-4 h-4 text-primary fill-primary" />
+                    <FaStar className="w-4 h-4 text-primary fill-primary" />
                     {movie.vote_average.toFixed(1)}
                   </p>
                   <p>{movie.vote_count}Votes</p>

@@ -27,7 +27,13 @@ const AddShows = () => {
       <div className='group flex flex-wrap gap-4'>
         {nowPlayingMovies.map((movie)=>(
           <div key={movie.id} className={`relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 translate-y-1 transition duration-300`}>
+            <div classname="relative rounded-lg overflow-hidden">
+              <img src={movie.poster_path} alt='' classname="w-full object-cover brightness-90"/>
+              <p>
+                
+              </p>
 
+            </div>
           </div>
         ))}
       </div>

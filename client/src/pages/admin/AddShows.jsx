@@ -21,26 +21,37 @@ const AddShows = () => {
 
   return nowPlayingMovies.length > 0 ? (
     <>
-     <Title text1="Add" text2="Shows" />
-     <p className='mt-10 text-lg font-medium'>Now Playing Movies</p>
-     <div className="overflow-x-auto pb-4">
-      <div className='group flex flex-wrap gap-4'>
-        {nowPlayingMovies.map((movie)=>(
-          <div key={movie.id} className={`relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 translate-y-1 transition duration-300`}>
-            <div classname="relative rounded-lg overflow-hidden">
-              <img src={movie.poster_path} alt='' classname="w-full object-cover brightness-90"/>
-              <p>
-                
-              </p>
-
+      <Title text1="Add" text2="Shows" />
+      <p className="mt-10 text-lg font-medium">Now Playing Movies</p>
+      <div className="overflow-x-auto pb-4">
+        <div className="group flex flex-wrap gap-4">
+          {nowPlayingMovies.map((movie) => (
+            <div
+              key={movie.id}
+              className={`relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 translate-y-1 transition duration-300`}
+            >
+              <div classname="relative rounded-lg overflow-hidden">
+                <img
+                  src={movie.poster_path}
+                  alt=""
+                  classname="w-full object-cover brightness-90"
+                />
+                <div className="text-sm flex items-center justify-between p-2 bg-black/70 w-full absolute bottom-0 left-0">
+                  <p classname="flex items-center gap-1 text-gray-400">
+                    <StartIcon classname="w-4 h-4 text-primary fill-primary" />
+                    {movie.vote_average.toFixed(1)}
+                  </p>
+                  <p>{movie.vote_count}Votes</p>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-
-     </div>
     </>
-  ) : <Loading />
+  ) : (
+    <Loading />
+  );
 }
 
 export default AddShows

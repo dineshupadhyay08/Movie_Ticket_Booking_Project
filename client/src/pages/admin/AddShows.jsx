@@ -55,7 +55,7 @@ const AddShows = () => {
     <>
       <Title text1="Add" text2="Shows" />
       <p className="mt-10 text-lg font-medium">Now Playing Movies</p>
-      <div className="overflow-x-auto pb-4">
+      <div className="overflow-x-auto pb-4 ">
         <div className="group flex flex-wrap gap-4">
           {nowPlayingMovies.map((movie) => (
             <div
@@ -149,6 +149,7 @@ const AddShows = () => {
           </ul>
         </div>
       )}
+      <button className='bg-primary text-white px-8 py-2 mt-6 rounded hover:bg-primary/90 transition-all cursor-pointer'>Add Show</button>
     </>
   ) : (
     <Loading />

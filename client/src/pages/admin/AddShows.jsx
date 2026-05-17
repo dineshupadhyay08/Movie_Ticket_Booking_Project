@@ -70,7 +70,7 @@ const AddShows = () => {
                   className="w-full object-cover brightness-90"
                 />
                 <div className="text-sm flex items-center justify-between p-2 bg-black/70 w-full absolute bottom-0 left-0">
-                  <p classname="flex items-center gap-1 text-gray-400">
+                  <p className="flex items-center gap-1 text-gray-400">
                     <FaStar className="w-4 h-4 text-primary fill-primary" />
                     {movie.vote_average.toFixed(1)}
                   </p>
@@ -88,47 +88,67 @@ const AddShows = () => {
           ))}
         </div>
       </div>
-      <div className='mt-8'>
-        <label className='block text-sm font-medium mb-2'>Show Price</label>
-        <div className='inline-flex items-center gap-2 border border-gray-600 px-3 py-2 rounded-md'>
-          <p className='text-gray-400 text-sm'>{currency}</p>
-          <input type="number" className="outline-none" min={0} value={showPrice} onChange={(e) => setShowPrice(e.target.value)} placeholder='Enter show price'/>
-
+      <div className="mt-8">
+        <label className="block text-sm font-medium mb-2">Show Price</label>
+        <div className="inline-flex items-center gap-2 border border-gray-600 px-3 py-2 rounded-md">
+          <p className="text-gray-400 text-sm">{currency}</p>
+          <input
+            type="number"
+            className="outline-none"
+            min={0}
+            value={showPrice}
+            onChange={(e) => setShowPrice(e.target.value)}
+            placeholder="Enter show price"
+          />
         </div>
       </div>
-      <div className='mt-6'>
-        <label className='block text-sm font-medium mb-2'>Select Date and Time</label>
-        <div className='inline-flex gap-5 border border-r-gray-600 p-1 pl-3 rounded-lg'>
-          <input type="datetime-local" value={dateTimeInput} onChange={(e) =>setDateTimeInput(e.target.value)} className='outline-none rounded-md'/>
-          <button className='bg-primary/80 text-white px-3 py-2 text-sm rounded-lg hover:bg-primary cursor-pointer'>Add Time</button>
-
+      <div className="mt-6">
+        <label className="block text-sm font-medium mb-2">
+          Select Date and Time
+        </label>
+        <div className="inline-flex gap-5 border border-r-gray-600 p-1 pl-3 rounded-lg">
+          <input
+            type="datetime-local"
+            value={dateTimeInput}
+            onChange={(e) => setDateTimeInput(e.target.value)}
+            className="outline-none rounded-md"
+          />
+          <button
+            onClick={handleDateTimeSelection}
+            className="bg-primary/80 text-white px-3 py-2 text-sm rounded-lg hover:bg-primary cursor-pointer"
+          >
+            Add Time
+          </button>
         </div>
       </div>
-      
+
       {Object.keys(dateTimeSelection).length > 0 && (
-        <div className='mt-6'>
-          <h2 className='mb-2'>Selected Date-Time</h2>
-          <ul className='space-y-3'>
-            {Object.entries(dateTimeSelection).map(([date,times]) => (
+        <div className="mt-6">
+          <h2 className="mb-2">Selected Date-Time</h2>
+          <ul className="space-y-3">
+            {Object.entries(dateTimeSelection).map(([date, times]) => (
               <li key={date}>
-                <div className='font-medium'>{date}</div>
-                <div className='flex flex-wrap gap-2 mt-1 text-sm'>
-                  {times.map((time)=>(
-                    <div key={time} className='border border-primary px-2 py-1 flex items-center rounded'>
+                <div className="font-medium">{date}</div>
+                <div className="flex flex-wrap gap-2 mt-1 text-sm">
+                  {times.map((time) => (
+                    <div
+                      key={time}
+                      className="border border-primary px-2 py-1 flex items-center rounded"
+                    >
                       <span>{time}</span>
-                      <MdDelete  />
+                      <MdDelete
+                        onClick={() => handleRemoveTime(date, time)}
+                        width={15}
+                        className="ml-2 text-red-500 hover:text-red-700 cursor-pointer"
+                      />
                     </div>
                   ))}
                 </div>
-
               </li>
             ))}
           </ul>
-
         </div>
       )}
-      
-
     </>
   ) : (
     <Loading />

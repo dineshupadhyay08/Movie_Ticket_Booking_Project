@@ -3,6 +3,8 @@ import { dummyShowsData } from '../../assets/assets';
 import Loading from '../../components/Loading';
 import Title from '../../components/Admin/Title';
 import { FaStar } from "react-icons/fa";
+import { kConverter } from '../../lib/kConverter';
+import { FaCheck } from "react-icons/fa";
 
 const AddShows = () => {
   const currency = import.meta.env.VITE_CURRENCY
@@ -30,6 +32,7 @@ const AddShows = () => {
             <div
               key={movie.id}
               className={`relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 translate-y-1 transition duration-300`}
+              onClick={() => setSelectedMovie(movie.id)}
             >
               <div classname="relative rounded-lg overflow-hidden">
                 <img
@@ -42,9 +45,14 @@ const AddShows = () => {
                     <FaStar className="w-4 h-4 text-primary fill-primary" />
                     {movie.vote_average.toFixed(1)}
                   </p>
-                  <p>{movie.vote_count}Votes</p>
+                  <p>{kConverter(movie.vote_count)}Votes</p>
                 </div>
               </div>
+              {selectedMovie === movie.id && (
+                <div className="absolute top-2 right-2 bg-primary rounded-full p-1">
+                  <FaCheck className="w-3 h-3 text-white" />
+                </div>
+              )}
             </div>
           ))}
         </div>

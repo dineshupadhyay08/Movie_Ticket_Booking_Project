@@ -34,11 +34,11 @@ const AddShows = () => {
               className={`relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 translate-y-1 transition duration-300`}
               onClick={() => setSelectedMovie(movie.id)}
             >
-              <div classname="relative rounded-lg overflow-hidden">
+              <div className="relative rounded-lg overflow-hidden">
                 <img
                   src={movie.poster_path}
                   alt=""
-                  classname="w-full object-cover brightness-90"
+                  className="w-full object-cover brightness-90"
                 />
                 <div className="text-sm flex items-center justify-between p-2 bg-black/70 w-full absolute bottom-0 left-0">
                   <p classname="flex items-center gap-1 text-gray-400">
@@ -49,14 +49,17 @@ const AddShows = () => {
                 </div>
               </div>
               {selectedMovie === movie.id && (
-                <div className="absolute top-2 right-2 bg-primary rounded-full p-1">
-                  <FaCheck className="w-3 h-3 text-white" />
+                <div className="absolute top-2 right-2 flex items-center justify-center bg-primary h-6 w-6 rounded">
+                  <FaCheck className="w-3 h-3 text-white" strokeWidth={2.5} />
                 </div>
               )}
+              <p className="font-medium truncate">{movie.title}</p>
+              <p className="text-gray-400 text-sm">{movie.release_date}</p>
             </div>
           ))}
         </div>
       </div>
+      <div></div>
     </>
   ) : (
     <Loading />

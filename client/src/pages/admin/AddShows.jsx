@@ -74,7 +74,7 @@ const AddShows = () => {
                     <FaStar className="w-4 h-4 text-primary fill-primary" />
                     {movie.vote_average.toFixed(1)}
                   </p>
-                  
+                  <p>{kConverter(movie.vote_count)}Votes</p>
                 </div>
               </div>
               {selectedMovie === movie.id && (

@@ -63,7 +63,6 @@ const AddShows = () => {
               className={`relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 translate-y-1 transition duration-300`}
               onClick={() => setSelectedMovie(movie.id)}
             >
-              <div className="relative rounded-lg overflow-hidden">
                 <img
                   src={movie.poster_path}
                   alt=""

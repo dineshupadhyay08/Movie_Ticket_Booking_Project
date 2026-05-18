@@ -69,13 +69,7 @@ const AddShows = () => {
                   alt=""
                   className="w-full object-cover brightness-90"
                 />
-                <div className="text-sm flex items-center justify-between p-2 bg-black/70 w-full absolute bottom-0 left-0">
-                  <p className="flex items-center gap-1 text-gray-400">
-                    <FaStar className="w-4 h-4 text-primary fill-primary" />
-                    {movie.vote_average.toFixed(1)}
-                  </p>
-                  <p>{kConverter(movie.vote_count)}Votes</p>
-                </div>
+                
               </div>
               {selectedMovie === movie.id && (
                 <div className="absolute top-2 right-2 flex items-center justify-center bg-primary h-6 w-6 rounded">

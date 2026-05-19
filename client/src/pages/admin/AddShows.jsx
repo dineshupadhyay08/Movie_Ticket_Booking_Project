@@ -89,7 +89,7 @@ const AddShows = () => {
         </div>
       </div>
       <div className="mt-8">
-        <label className="block text-sm font-medium mb-2">Show Price</label>
+        
         <div className="inline-flex items-center gap-2 border border-gray-600 px-3 py-2 rounded-md">
           <p className="text-gray-400 text-sm">{currency}</p>
           <input

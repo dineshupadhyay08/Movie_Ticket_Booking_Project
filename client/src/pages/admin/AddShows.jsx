@@ -94,7 +94,7 @@ const AddShows = () => {
           <p className="text-gray-400 text-sm">{currency}</p>
           <input
             type="number"
-            
+            className="outline-none"
             min={0}
             value={showPrice}
             onChange={(e) => setShowPrice(e.target.value)}

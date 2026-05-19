@@ -97,7 +97,7 @@ const AddShows = () => {
             className="outline-none"
             min={0}
             value={showPrice}
-            onChange={(e) => setShowPrice(e.target.value)}
+            onChange={(e) => setShowPrice()}
             placeholder="Enter show price"
           />
         </div>

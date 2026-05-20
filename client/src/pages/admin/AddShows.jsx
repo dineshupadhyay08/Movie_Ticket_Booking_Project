@@ -135,7 +135,7 @@ const AddShows = () => {
                       key={time}
                       className="border border-primary px-2 py-1 flex items-center rounded"
                     >
-                      <span>{time}</span>
+                      
                       <MdDelete
                         onClick={() => handleRemoveTime(date, time)}
                         width={15}

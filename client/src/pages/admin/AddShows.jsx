@@ -139,7 +139,7 @@ const AddShows = () => {
                       <MdDelete
                         onClick={() => handleRemoveTime(date, time)}
                         width={15}
-                        className=""
+                        className="ml-2 text-red-500 hover:text-red-700 cursor-pointer"
                       />
                     </div>
                   ))}

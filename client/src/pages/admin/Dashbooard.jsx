@@ -28,7 +28,6 @@ const Dashbooard = () => {
 
   const fetchDashboardData = async () =>{
     setDashboardData(dummyDashboardData)
-    setLoading(false)
   };
   useEffect(()=>{
     fetchDashboardData();

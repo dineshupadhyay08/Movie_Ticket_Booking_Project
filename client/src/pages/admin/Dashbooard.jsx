@@ -77,7 +77,10 @@ const Dashbooard = () => {
                 {currency} {show.showPrice}
               </p>
 
-              
+              <p >
+                <StarIcon className="w-4 h-4 text-pretty fill-primary" />
+                {show.movie.vote_average.toFixed(1)}
+              </p>
             </div>
           </div>
         ))}

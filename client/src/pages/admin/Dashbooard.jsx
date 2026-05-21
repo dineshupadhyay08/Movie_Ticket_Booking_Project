@@ -88,6 +88,7 @@ const Dashbooard = () => {
       </div>
     </>
   ) : (
+    <Loading />
   );
 }
 

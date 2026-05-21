@@ -7,7 +7,7 @@ import BlurCircle from '../../components/BlurCircle'
 
 const Dashbooard = () => {
 
-  const currency = import.meta.env.VITE_CURRENCY
+  const currency = import.meta.env.
 
 
   const [dashboardData, setDashboardData] = useState({

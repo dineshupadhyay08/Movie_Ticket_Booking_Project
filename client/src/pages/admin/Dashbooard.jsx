@@ -26,13 +26,7 @@ const Dashbooard = () => {
     {title: "Total Users", value: dashboardData.totalUser || "0", icon: UserIcon},
   ]
 
-  const fetchDashboardData = async () =>{
-    setDashboardData(dummyDashboardData)
-    setLoading(false)
-  };
-  useEffect(()=>{
-    fetchDashboardData();
-  },[]);
+  },[]) ;
 
 
   return !loading ? (

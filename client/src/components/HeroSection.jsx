@@ -11,7 +11,7 @@ const HeroSection = () => {
       style={{ backgroundImage: `linear-gradient(to right, rgba(9, 9, 11, 0.15), rgba(9, 9, 11, 0.18)), url(${assets.backgroundImage})` }}
     >
       <img src={assets.marvelLogo} alt='' className='mt-20 max-h-11 lg:h-11'/>
-      <h1 className='max-w-110 text-5xl font-semibold md:text-[70px] md:leading-18'>Guardians.. <br/> of the Galaxy</h1>
+      <h1 className='max-w-110 text-5xl font-semibold md:text-[70px] md:leading-18'>Guardians <br/> of the Galaxy</h1>
       <div className='flex items-center gap-4 text-gray-300'>
         <span>Action | Adventure | Sci-Fi</span>
         <div className='flex items-center gap-1'>

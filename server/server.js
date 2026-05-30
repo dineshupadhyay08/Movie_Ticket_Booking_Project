@@ -5,7 +5,7 @@ import connectDB from "./configs/db.js";
 import { clerkMiddleware } from "@clerk/express";
 import { serve } from "inngest/express";
 
-import { inngest, functions } from "./inngest/index.js";
+import { inngest, functions } from "./Inngest/index.js";
 
 const app = express();
 const Port = 3000;

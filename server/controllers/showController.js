@@ -1,6 +1,7 @@
 import axios from "axios";
 import Movie from "../models/Movies.js";
 import Show from "../models/Show.js";
+import movie from "../models/Movies.js";
 
 
 export const getNowPlayigMovies = async(req,res)=>{
@@ -81,5 +82,52 @@ export const addShow = async(req,res)=>{
       success: false,
       message: error.message,
     });
+  }
+}
+
+
+
+export const getShows = async(req,res)=>{
+  try{
+    const shows = await Show.find({showDateTime: {$gte: new Date()}}).populate('movies').sort({showDateTime: 1});
+
+    const uniqueShows = new Set(shows.map(show=>show.movie))
+    res.json({success: true, shows: Array.from(uniqueShows)})
+  }catch(error){
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message,
+    })
+  }
+}
+
+
+
+export const getShow = async(req,res)=>{
+  try{
+    const {movieId} = req.params;
+    const shows = await Show.find({
+      movie: movieId, showDateTime: {$gte: new Date()}
+    })
+    const movie = await Movie.findById(movieId);
+    const dateTime = {};
+
+    shows.forEach((show)=>{
+      const date = show.showDateTime.toISOString().split('T')[0];
+      if(!dateTime[date]){
+        dateTime[date] = [];
+      }
+      dateTime[date].push({
+        time: show.showDateTime, showId: show._id,
+      })
+    })
+
+  }catch(error){
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message,
+    })
   }
 }

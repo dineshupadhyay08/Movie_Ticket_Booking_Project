@@ -1,5 +1,5 @@
 import axios from "axios";
-import movies from "../models/Movies.js";
+import Movie from "../models/Movies.js";
 import Show from "../models/Show.js";
 
 
@@ -21,10 +21,10 @@ export const getNowPlayigMovies = async(req,res)=>{
 }
 
 export const addShow = async(req,res)=>{
-  try{
-    const {moviesId, showsInput, showPrice} = req.body;
-    let movie = await movies.findById(moviesId);
-    if(!movie){
+  try {
+    const { moviesId, showsInput, showPrice } = req.body;
+    let movie = await Movie.findById(moviesId);
+    if (!movie) {
       const [movieDetailsResponse, moviesCreditsResponse] = await Promise.all([
         axios.get(`https://api.themoviedb.org/3/movie/${moviesId}`, {
           headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
@@ -42,7 +42,7 @@ export const addShow = async(req,res)=>{
         overview: movieApiData.overview,
         poster_path: movieApiData.poster_path,
         backdrop_path: movieApiData.backdrop_path,
-        generes: movieApiData.generes,
+        genres: movieApiData.genres,
         casts: moviesCreditsData.cast,
         release_date: movieApiData.release_date,
         original_language: movieApiData.original_language,
@@ -51,34 +51,35 @@ export const addShow = async(req,res)=>{
         runtime: movieApiData.runtime,
       };
 
-      movies = await Movie.create(movieDetails);
+      movie = await Movie.create(movieDetails);
     }
 
     const showToCreate = [];
-    showsInput.forEach(show=>{
+    showsInput.forEach((show) => {
       const showDate = show.date;
-      show.time.forEach((time)=>{
+      show.time.forEach((time) => {
         const dateTimeString = `${showDate}T${time}`;
         showToCreate.push({
-          movie: moviesId,
-          showdateTime: new Date(dateTimeString),
+          movies: moviesId,
+          showDateTime: new Date(dateTimeString),
           showPrice,
-          occupiedSeats: {}
-        })
-      })
-    })
+          occupiedSeats: {},
+        });
+      });
+    });
 
-    if(showToCreate.length > 0){
+    if (showToCreate.length > 0) {
       await Show.insertMany(showToCreate);
       res.json({
         success: true,
-        message: 'Shows added successfully',
-      })
+        message: "Shows added successfully",
+      });
     }
-
-
-  }catch(error){
-    console.log(error.message)
-    res.json({success:false, message: error.message})
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message,
+    });
   }
 }

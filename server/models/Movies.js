@@ -2,7 +2,7 @@ import mongoose, { mongo } from "mongoose"
 
 const movieSchema = new mongoose.Schema(
   {
-    _id: {type: String, required: true },
+    _id: { type: String, required: true },
     title:{type: String, required: true },
     overview: {type: String, required: true },
     poster_path: {type: String, required: true },
@@ -18,4 +18,4 @@ const movieSchema = new mongoose.Schema(
 )
 const movie = mongoose.model('Movie',movieSchema)
 
-export default movies;
+export default movie;

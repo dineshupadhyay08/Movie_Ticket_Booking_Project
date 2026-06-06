@@ -6,11 +6,13 @@ import { clerkMiddleware } from "@clerk/express";
 import { serve } from "inngest/express";
 
 import { inngest, functions } from "./Inngest/index.js";
+import showRouter from "./routes/showRoutes.js";
 
 const app = express();
 const Port = 3000;
 
 await connectDB();
+
 
 app.use(express.json());
 app.use(cors());
@@ -27,6 +29,9 @@ app.use(
     functions,
   }),
 );
+
+app.use('/api/shows',showRouter);
+
 
 app.listen(Port, () => {
   console.log(`Server running at http://localhost:${Port}`);

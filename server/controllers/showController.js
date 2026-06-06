@@ -1,27 +1,25 @@
 import axios from "axios";
 import Movie from "../models/Movies.js";
 import Show from "../models/Show.js";
-import movie from "../models/Movies.js";
 
+export const getNowPlayigMovies = async (req, res) => {
+  try {
+    const { data } = await axios.get(
+      "https://api.themoviedb.org/3/movie/now_playing",
+      {
+        headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
+      },
+    );
 
-export const getNowPlayigMovies = async(req,res)=>{
-  try{
-    const {data} = await axios.get('https://api.themoviedb.org/3/movie/now_playing',{
-      headers: {Authorization: `Bearer ${process.env.TMDB_API_KEY}`}
-    })
-    
     const movies = data.results;
-    res.json({success: true, movies: movies})
-    
-  }catch (error) {
-    console.log(error.message)
-    res.json({success: false,
-      message: 'Failed to fetch now playing movies',
-    })
+    res.json({ success: true, movies: movies });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: "Failed to fetch now playing movies" });
   }
-}
+};
 
-export const addShow = async(req,res)=>{
+export const addShow = async (req, res) => {
   try {
     const { moviesId, showsInput, showPrice } = req.body;
     let movie = await Movie.findById(moviesId);
@@ -83,51 +81,82 @@ export const addShow = async(req,res)=>{
       message: error.message,
     });
   }
-}
+};
 
+export const getShows = async (req, res) => {
+  try {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
 
+    const shows = await Show.find({
+      showDateTime: { $gte: today },
+    });
 
-export const getShows = async(req,res)=>{
-  try{
-    const shows = await Show.find({showDateTime: {$gte: new Date()}}).populate('movies').sort({showDateTime: 1});
+    const movieIds = [...new Set(shows.map((show) => show.movies))];
 
-    const uniqueShows = new Set(shows.map(show=>show.movie))
-    res.json({success: true, shows: Array.from(uniqueShows)})
-  }catch(error){
+    const movies = await Movie.find({
+      _id: { $in: movieIds },
+    });
+
+    res.json({
+      success: true,
+      shows: movies,
+    });
+  } catch (error) {
     console.log(error);
     res.json({
       success: false,
       message: error.message,
-    })
+    });
   }
-}
+};
 
+export const getShow = async (req, res) => {
+  try {
+    const { movieId } = req.params;
 
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
 
-export const getShow = async(req,res)=>{
-  try{
-    const {movieId} = req.params;
     const shows = await Show.find({
-      movie: movieId, showDateTime: {$gte: new Date()}
-    })
+      movies: movieId,
+      showDateTime: { $gte: today },
+    }).sort({ showDateTime: 1 });
+
     const movie = await Movie.findById(movieId);
+
+    if (!movie) {
+      return res.json({
+        success: false,
+        message: "Movie not found",
+      });
+    }
+
     const dateTime = {};
 
-    shows.forEach((show)=>{
-      const date = show.showDateTime.toISOString().split('T')[0];
-      if(!dateTime[date]){
+    shows.forEach((show) => {
+      const date = show.showDateTime.toISOString().split("T")[0];
+
+      if (!dateTime[date]) {
         dateTime[date] = [];
       }
-      dateTime[date].push({
-        time: show.showDateTime, showId: show._id,
-      })
-    })
 
-  }catch(error){
+      dateTime[date].push({
+        time: show.showDateTime,
+        showId: show._id,
+      });
+    });
+
+    res.json({
+      success: true,
+      movie,
+      dateTime,
+    });
+  } catch (error) {
     console.log(error);
     res.json({
       success: false,
       message: error.message,
-    })
+    });
   }
-}
+};

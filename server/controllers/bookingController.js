@@ -47,7 +47,39 @@ export const createBooking = async(req,res)=>{
 
        showData.markModified("occupiedSeats");
 
-    }catch(error){
+       await showDate.save();
+       res.json({
+        success: true,
+        message: "Booking created successfully",
+       })
 
+    }catch(error){
+      console.log(error.message);
+      res.json({
+        success: false,
+        message: error.message,
+      })
     }
+}
+
+
+
+export const getOccupiedSeats = async(req,res)=>{
+  try{
+    const {showId} = req.params;
+    const showData = await Show.findById(showId);
+    const occupiedSeats = Object.keys(showData.occupiedSeats);
+
+    res.jso({
+      success: true,
+      occupiedSeats,
+    })
+
+  }catch(error){
+    console.log(error.message);
+    res.json({
+      success: false,
+      message: error.message,
+    })
+  }
 }

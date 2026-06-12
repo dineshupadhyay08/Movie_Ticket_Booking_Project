@@ -30,3 +30,14 @@ export const getDashboardData = async(req,res)=>{
     })
   }
 }
+
+
+export const getAllShows = async (req,res)=>{
+  try{
+    const show = await Show.find({showDateTime: { $gte: new Date()}}).populate('movie').sort({showDateTime: 1})
+    res.json({success:false,message: error.message})
+  }catch(error){
+    console.error(error);
+    res.json({success: false, message:error.message})
+  }
+}

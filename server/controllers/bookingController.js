@@ -1,4 +1,4 @@
-import Show from "../models/Show"
+import Show from "../models/Show.js"
 
 const checkSeatsAvailability = async (req, res) => {
   try{

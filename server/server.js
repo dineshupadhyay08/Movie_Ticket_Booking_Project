@@ -8,6 +8,8 @@ import { serve } from "inngest/express";
 import { inngest, functions } from "./Inngest/index.js";
 import showRouter from "./routes/showRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 const app = express();
 const Port = 3000;
@@ -33,6 +35,8 @@ app.use(
 
 app.use('/api/shows',showRouter);
 app.use('/api/bookings',bookingRouter);
+app.use('/api/admin',adminRouter);
+app.use('/api/user',userRouter)
 
 app.listen(Port, () => {
   console.log(`Server running at http://localhost:${Port}`);

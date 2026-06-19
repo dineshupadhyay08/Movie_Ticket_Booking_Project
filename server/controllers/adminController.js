@@ -1,6 +1,6 @@
-import { User } from "@clerk/express"
-import { Booking } from "../models/Booking"
-import Show from "../models/Show"
+import { clerkClient } from "@clerk/express";
+import Booking from "../models/Booking.js"
+import Show from "../models/Show.js"
 
 
 export const isAdmin = async(req,res)=>{

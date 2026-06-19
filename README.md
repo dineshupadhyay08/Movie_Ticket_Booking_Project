@@ -261,9 +261,20 @@ Feel free to fork the repository and submit a pull request.
 
 ---
 
+
 ## 👨‍💻 Developer
 
-Developed with ❤️ using React, Node.js, MongoDB, Clerk, and Inngest.
+**Dinesh Upadhyay**
+
+Full Stack Developer
+
+Built with ❤️ using React, Node.js, MongoDB, Clerk, Inngest, and Tailwind CSS.
+
+🌐 Portfolio: https://dinesh-upadhyay-portfolio-jbh1.vercel.app/
+
+💼 LinkedIn: https://www.linkedin.com/in/dinesh-upadhyay-030487247/
+
+🚀 Built with React, Node.js, MongoDB, Clerk, Inngest, Tailwind CSS, and Express.js.
 
 ---
 

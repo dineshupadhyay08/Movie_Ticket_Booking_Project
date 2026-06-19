@@ -4,7 +4,7 @@ import { dummyDateTimeData, dummyShowsData } from '../assets/assets'
 import BlurCircle from '../components/BlurCircle'
 import { Heart, PlayCircleIcon, StarIcon } from 'lucide-react'
 import timeFormat from '../lib/timeFormat'
-import { div } from 'framer-motion/client'
+// import { motion } from "framer-motion/client";
 import DateSection from '../components/DateSection'
 import MovieCard from '../components/MovieCard'
 import Loading from '../components/Loading'
@@ -35,8 +35,21 @@ const MoviesDetails = () => {
   };
 
   useEffect(() => {
-    getShow()
-  }, [id])
+    const loadShow = async () => {
+      const foundShow = dummyShowsData.find((show) => show._id === id);
+
+      getShow(
+        foundShow
+          ? {
+              movie: foundShow,
+              dateTime: dummyDateTimeData,
+            }
+          : null,
+      );
+    };
+
+    loadShow();
+  }, [id]);
 
   return show ? (
     <div className="px-6 md:px-16 lg:px-40 pt-30 md:pt-50">

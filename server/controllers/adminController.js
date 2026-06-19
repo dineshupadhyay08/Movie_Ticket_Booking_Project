@@ -16,11 +16,11 @@ export const getDashboardData = async(req,res)=>{
     const totalUser = await User.countDocuments();
 
     const getDashboardData = {
-      totalBooking:booking.length,
-      totalRevenue:booking.reduce((acc,booking)=>acc + booking.amoutn, 0),
+      totalBooking: booking.length,
+      totalRevenue: booking.reduce((acc, booking) => acc + booking.amount, 0),
       activeShows,
-      totalUser
-    }
+      totalUser,
+    };
     res.json({success:true,getDashboardData})
   }catch(error){
     console.log(error)

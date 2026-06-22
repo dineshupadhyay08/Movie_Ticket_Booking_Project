@@ -4,7 +4,7 @@ import googlePlay from './googlePlay.svg'
 import appStore from './appStore.svg'
 import screenImage from './screenImage.svg'
 import profile from './profile.png'
-import backgroundImage from './backgroundImage.png'
+import backgroundImage from './spider-man.jpg'
 
 export const assets = {
     logo,

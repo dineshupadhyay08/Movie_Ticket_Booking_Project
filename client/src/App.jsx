@@ -7,7 +7,7 @@ import MoviesDetails from "./pages/MoviesDetails";
 import SeatLayout from "./pages/SeatLayout";
 import MyBookings from "./pages/MyBookings";
 import Favorite from "./pages/Favorite";
-import {Toaster} from "react-hot-toast";
+// import {Toaster} from "react-hot-toast";
 import Footer from "./components/Footer";
 import Layout from "./pages/admin/Layout";
 import AddShows from "./pages/admin/AddShows";
@@ -25,7 +25,8 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Toaster />
+      {/* <Toaster /> */}
+      <ToastContainer position="top-right" />
       {!isAdminRoute && <Navbar />}
       <main className="flex-1">
         <Routes>
@@ -35,16 +36,23 @@ const App = () => {
           <Route path="/movies/:id/:data" element={<SeatLayout />} />
           <Route path="/my-bookings" element={<MyBookings />} />
           <Route path="/favorites" element={<Favorite />} />
-            <Route path="/admin/*" element={user ? <Layout/> : (
-              <div className="min-h-screen flex justify-center items-center">
-                <SignIn fallbackRedirectUrl={'/admin'}/>
-              </div>
-            )}>
-              <Route index element={<Dashbooard/>}/>
-              <Route path="add-shows" element={<AddShows/>}/>
-              <Route path="list-shows" element={<ListShows/>}/>
-              <Route path="list-bookings" element={<ListBookings/>}/>
-            </Route>
+          <Route
+            path="/admin/*"
+            element={
+              user ? (
+                <Layout />
+              ) : (
+                <div className="min-h-screen flex justify-center items-center">
+                  <SignIn fallbackRedirectUrl={"/admin"} />
+                </div>
+              )
+            }
+          >
+            <Route index element={<Dashbooard />} />
+            <Route path="add-shows" element={<AddShows />} />
+            <Route path="list-shows" element={<ListShows />} />
+            <Route path="list-bookings" element={<ListBookings />} />
+          </Route>
         </Routes>
       </main>
       {!isAdminRoute && <Footer />}

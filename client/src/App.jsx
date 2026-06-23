@@ -14,9 +14,14 @@ import AddShows from "./pages/admin/AddShows";
 import ListShows from "./pages/admin/ListShows";
 import ListBookings from "./pages/admin/ListBookings";
 import Dashbooard from "./pages/admin/Dashbooard";
+import { useAppContext } from "./context/AppContext";
+import { SignIn } from "@clerk/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith("/admin");
+  const {user} = useAppContext()
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -30,7 +35,11 @@ const App = () => {
           <Route path="/movies/:id/:data" element={<SeatLayout />} />
           <Route path="/my-bookings" element={<MyBookings />} />
           <Route path="/favorites" element={<Favorite />} />
-            <Route path="/admin/*" element={<Layout/>}>
+            <Route path="/admin/*" element={user ? <Layout/> : (
+              <div className="min-h-screen flex justify-center items-center">
+                <SignIn fallbackRedirectUrl={'/admin'}/>
+              </div>
+            )}>
               <Route index element={<Dashbooard/>}/>
               <Route path="add-shows" element={<AddShows/>}/>
               <Route path="list-shows" element={<ListShows/>}/>

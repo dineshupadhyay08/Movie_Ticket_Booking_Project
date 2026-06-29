@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { dummyShowsData } from '../../assets/assets';
+// import { dummyShowsData } from '../../assets/assets';
 import Loading from '../../components/Loading';
 import Title from '../../components/Admin/Title';
 import { FaStar } from "react-icons/fa";
 import { kConverter } from '../../lib/kConverter';
 import { FaCheck } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { useAppContext } from '../../context/AppContext';
 
 const AddShows = () => {
+
+  const {axios,getToken, user} = useAppContext()
+
+
   const currency = import.meta.env.VITE_CURRENCY
   const [nowPlayingMovies,setNowPlayingMovies] = useState([]);
   const [selectedMovie,setSelectedMovie] = useState(null);
@@ -16,7 +21,17 @@ const AddShows = () => {
   const [showPrice,setShowPrice] = useState("");
 
   const fetchNowPlayingMovies = async () =>{
-    setNowPlayingMovies(dummyShowsData)
+    // setNowPlayingMovies(dummyShowsData)
+    try {
+      const { data } = await axios.get('/api/show/now-playing',{
+        header: {Authorization: `Bearer ${await getToken()}`}})
+        if(data.success){
+          setNowPlayingMovies(data.movies)
+        }
+    } catch (error) {
+      console.error("Frrot fetching movies:",error )
+    }
+
   }
 
   const handleDateTimeSelection =() =>{

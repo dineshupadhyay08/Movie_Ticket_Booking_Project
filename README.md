@@ -1,4 +1,4 @@
-# 🎬 Movie Ticket Booking Platform hshsru
+# 🎬 Movie Ticket Booking Platform hsh
 
 A full-stack movie ticket booking application that allows users to browse movies, view show timings, select seats, and book tickets seamlessly.
 

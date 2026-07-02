@@ -1,4 +1,4 @@
-# 🎬 Movie Ticket Booking Platform hshsruurubcc
+# 🎬 Movie Ticket Booking Platform hshsruurub
 
 A full-stack movie ticket booking application that allows users to browse movies, view show timings, select seats, and book tickets seamlessly.
 

@@ -14,14 +14,14 @@ import AddShows from "./pages/admin/AddShows";
 import ListShows from "./pages/admin/ListShows";
 import ListBookings from "./pages/admin/ListBookings";
 import Dashbooard from "./pages/admin/Dashbooard";
-import { useAppContext } from "./context/AppContext";
-import { SignIn } from "@clerk/react";
+import Loading from "./components/Loading";
+import { SignIn, useUser } from "@clerk/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith("/admin");
-  const {user} = useAppContext()
+  const { isLoaded, isSignedIn } = useUser();
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -39,7 +39,11 @@ const App = () => {
           <Route
             path="/admin/*"
             element={
-              user ? (
+              !isLoaded ? (
+                <div className="min-h-screen flex justify-center items-center">
+                  <Loading />
+                </div>
+              ) : isSignedIn ? (
                 <Layout />
               ) : (
                 <div className="min-h-screen flex justify-center items-center">

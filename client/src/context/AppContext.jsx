@@ -5,7 +5,9 @@ import { useAuth, useUser } from "@clerk/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+const api = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL?.trim() || "http://localhost:3000",
+});
 
 export const AppContext = createContext();
 
@@ -22,7 +24,7 @@ export const AppProvider = ({ children }) => {
 
   const fetchIsAdmin = async () => {
     try {
-      const { data } = await axios.get("/api/admin/is-admin", {
+      const { data } = await api.get("/api/admin/is-admin", {
         headers: {
           Authorization: `Bearer ${await getToken()}`,
         },
@@ -41,7 +43,7 @@ export const AppProvider = ({ children }) => {
 
   const fetchShows = async () => {
     try {
-      const { data } = await axios.get("/api/shows/all");
+      const { data } = await api.get("/api/shows/all");
 
       if (data.success) {
         setShows(data.shows);
@@ -55,7 +57,7 @@ export const AppProvider = ({ children }) => {
 
   const fetchFavoriteMovies = async () => {
     try {
-      const { data } = await axios.get("/api/user/favorites", {
+      const { data } = await api.get("/api/user/favorites", {
         headers: {
           Authorization: `Bearer ${await getToken()}`,
         },
@@ -83,7 +85,7 @@ export const AppProvider = ({ children }) => {
   }, [user]);
 
   const value = {
-    axios,
+    axios: api,
     fetchIsAdmin,
     user,
     getToken,

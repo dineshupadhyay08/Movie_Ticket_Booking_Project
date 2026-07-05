@@ -22,6 +22,28 @@ export const getNowPlayigMovies = async (req, res) => {
 export const addShow = async (req, res) => {
   try {
     const { moviesId, showsInput, showPrice } = req.body;
+
+    if (!moviesId) {
+      return res.json({
+        success: false,
+        message: "Movie id is required.",
+      });
+    }
+
+    if (!Array.isArray(showsInput) || showsInput.length === 0) {
+      return res.json({
+        success: false,
+        message: "At least one show date and time is required.",
+      });
+    }
+
+    if (!showPrice || Number(showPrice) <= 0) {
+      return res.json({
+        success: false,
+        message: "A valid show price is required.",
+      });
+    }
+
     let movie = await Movie.findById(moviesId);
     if (!movie) {
       const [movieDetailsResponse, moviesCreditsResponse] = await Promise.all([
@@ -67,13 +89,18 @@ export const addShow = async (req, res) => {
       });
     });
 
-    if (showToCreate.length > 0) {
-      await Show.insertMany(showToCreate);
-      res.json({
-        success: true,
-        message: "Shows added successfully",
+    if (showToCreate.length === 0) {
+      return res.json({
+        success: false,
+        message: "No valid show times were provided.",
       });
     }
+
+    await Show.insertMany(showToCreate);
+    res.json({
+      success: true,
+      message: "Shows added successfully",
+    });
   } catch (error) {
     console.log(error);
     res.json({

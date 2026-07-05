@@ -23,6 +23,7 @@ const AddShows = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  // const [addingShow, setAddingShow] = useState(false);
 
   const getPosterUrl = (path) =>
     path?.startsWith("http") ? path : `https://image.tmdb.org/t/p/w500${path}`;

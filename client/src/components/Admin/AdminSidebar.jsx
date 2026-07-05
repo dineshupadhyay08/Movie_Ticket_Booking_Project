@@ -1,7 +1,7 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 import { LayoutDashboardIcon, ListCollapseIcon, ListIcon, PlusSquareIcon } from 'lucide-react'
-import { NavLink } from 'react-router'
+import { NavLink } from "react-router-dom";
 
 const AdminSidebar = () => {
 

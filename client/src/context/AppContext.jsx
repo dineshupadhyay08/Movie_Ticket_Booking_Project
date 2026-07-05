@@ -5,8 +5,22 @@ import { useAuth, useUser } from "@clerk/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+const resolveApiBaseUrl = () => {
+  const envBaseUrl = import.meta.env.VITE_BASE_URL?.trim();
+
+  if (typeof window !== "undefined") {
+    const { hostname } = window.location;
+
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return "http://localhost:3000";
+    }
+  }
+
+  return envBaseUrl || "http://localhost:3000";
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL?.trim() || "http://localhost:3000",
+  baseURL: resolveApiBaseUrl(),
 });
 
 export const AppContext = createContext();

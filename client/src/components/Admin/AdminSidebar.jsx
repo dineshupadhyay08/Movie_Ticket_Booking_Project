@@ -12,7 +12,8 @@ import { useAppContext } from "../../context/AppContext";
 const AdminSidebar = () => {
   const { user } = useAppContext();
 
- 
+  const firstName = user?.firstName || "Admin";
+  
 
   const adminNavlinks = [
     { name: "Dashboard", path: "/admin", icon: LayoutDashboardIcon },

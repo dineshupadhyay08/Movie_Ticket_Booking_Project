@@ -13,7 +13,7 @@ const AdminSidebar = () => {
   const { user } = useAppContext();
 
   const firstName = user?.firstName || "Admin";
-  
+  const lastName = user?.lastName || "User";
 
   const adminNavlinks = [
     { name: "Dashboard", path: "/admin", icon: LayoutDashboardIcon },

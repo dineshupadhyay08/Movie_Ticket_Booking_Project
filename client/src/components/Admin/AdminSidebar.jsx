@@ -14,6 +14,7 @@ const AdminSidebar = () => {
 
   const firstName = user?.firstName || "Admin";
   const lastName = user?.lastName || "User";
+  const imageUrl = user?.imageUrl || assets.profile;
 
   const adminNavlinks = [
     { name: "Dashboard", path: "/admin", icon: LayoutDashboardIcon },

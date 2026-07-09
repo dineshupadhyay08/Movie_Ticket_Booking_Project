@@ -9,32 +9,30 @@ const ListShows = () => {
 
   const currency = import.meta.env.VITE_CURRENCY
 
-  const {axios, getToken, user, image_base_url} = useAppContext
+  const {axios, getToken, user} = useAppContext()
 
   const [show,setShow] = useState([])
   const [loading,setLoading] = useState(true)
 
   const getAllShow = async () =>{
     try {
-      setShow([{
-        movie: dummyShowsData[0],
-        showDateTime: "2025-06-30T02:30:00.000Z",
-        showPrice: 59,
-        occupiedSeats: {
-          A1: "user_1",
-          B1: "user_2",
-          C1: "user_3"
+      const { data } = await axios.get("/api/admin/all-shows",{
+        headers:{
+          Authorization: `Bearer ${getToken()}`
         }
-      }])
+      })
+      setShow(data.shows);
       setLoading(false);
-    }catch(errro){
+    }catch(error){
       console.log(error);
     }
   }
 
   useEffect(()=>{
-    getAllShow();
-  },[]);
+    if(user){
+      getAllShow();
+    }
+  },[user]);
 
 
   return ! loading ? (

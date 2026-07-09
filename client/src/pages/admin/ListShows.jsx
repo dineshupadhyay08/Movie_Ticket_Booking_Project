@@ -3,10 +3,13 @@ import { dummyShowsData } from '../../assets/assets'
 import Loading from '../../components/Loading'
 import Title from '../../components/Admin/Title'
 import { dateFormat } from '../../lib/dateFormat'
+import { useAppContext } from '../../context/AppContext'
 
 const ListShows = () => {
 
   const currency = import.meta.env.VITE_CURRENCY
+
+  const {axios, getToken, user, image_base_url} = useAppContext
 
   const [show,setShow] = useState([])
   const [loading,setLoading] = useState(true)

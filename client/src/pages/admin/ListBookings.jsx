@@ -23,13 +23,16 @@ const ListBookings = () => {
       setBookings(data.bookings);
       setIsLoading(false);
     }catch(error){
-
+      console.log(error);
     }
+    setIsLoading(false);
   };
 
   useEffect(()=>{
-    getAllBookings();
-  },[]);
+    if(user){
+      getAllBookings();
+    }
+  },[user]);
 
   return !isLoading ? (
     <>

@@ -5,8 +5,12 @@ import { useAuth, useUser } from "@clerk/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+const image_base_url = import.meta.env.VITE_IMAGE_BASE_URL;
+
 const resolveApiBaseUrl = () => {
+  
   const envBaseUrl = import.meta.env.VITE_BASE_URL?.trim();
+  
 
   if (typeof window !== "undefined") {
     const { hostname } = window.location;
@@ -108,6 +112,7 @@ export const AppProvider = ({ children }) => {
     shows,
     favoriteMovies,
     fetchFavoriteMovies,
+    image_base_url
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

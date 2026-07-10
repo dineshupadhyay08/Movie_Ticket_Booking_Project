@@ -14,19 +14,43 @@ const ListShows = () => {
   const [show,setShow] = useState([])
   const [loading,setLoading] = useState(true)
 
-  const getAllShow = async () =>{
+  // const getAllShow = async () =>{
+  //   try {
+  //     const { data } = await axios.get("/api/admin/all-shows",{
+  //       headers:{
+  //         Authorization: `Bearer ${getToken()}`
+  //       }
+  //     })
+  //     setShow(data.shows);
+  //     setLoading(false);
+  //   }catch(error){
+  //     console.log(error);
+  //   }
+  // }
+  
+  const getAllShow = async () => {
     try {
-      const { data } = await axios.get("/api/admin/all-shows",{
-        headers:{
-          Authorization: `Bearer ${getToken()}`
-        }
-      })
-      setShow(data.shows);
+      const token = await getToken();
+
+      console.log("Token:", token);
+
+      const { data } = await axios.get("/api/admin/all-shows", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(data);
+
+      if (data.success) {
+        setShow(data.shows || []);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
       setLoading(false);
-    }catch(error){
-      console.log(error);
     }
-  }
+  };
 
   useEffect(()=>{
     if(user){

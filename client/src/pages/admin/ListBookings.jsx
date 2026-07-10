@@ -13,19 +13,29 @@ const ListBookings = () => {
   const [bookings,setBookings] = useState([])
   const [isLoading,setIsLoading] = useState(true);
 
-  const getAllBookings = async () =>{
-    try{
-      const { data } = await axios.get("/api/admin/all-bookings",{
-        headers:{
-          Authorization: `Bearer ${getToken()}`
-        }
-      })
-      setBookings(data.bookings);
+  const getAllBookings = async () => {
+    try {
+      const token = await getToken();
+
+      const { data } = await axios.get("/api/admin/all-bookings", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(data);
+
+      if (data.success) {
+        setBookings(data.bookings || []);
+      } else {
+        setBookings([]);
+      }
+    } catch (error) {
+      console.error(error);
+      setBookings([]);
+    } finally {
       setIsLoading(false);
-    }catch(error){
-      console.log(error);
     }
-    setIsLoading(false);
   };
 
   useEffect(()=>{

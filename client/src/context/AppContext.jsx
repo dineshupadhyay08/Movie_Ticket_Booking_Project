@@ -12,7 +12,13 @@ const resolveApiBaseUrl = () => {
   const envBaseUrl = import.meta.env.VITE_BASE_URL?.trim();
   
 
-  
+  if (typeof window !== "undefined") {
+    const { hostname } = window.location;
+
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return "http://localhost:3000";
+    }
+  }
 
   return envBaseUrl || "http://localhost:3000";
 };

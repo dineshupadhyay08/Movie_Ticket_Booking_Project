@@ -6,6 +6,7 @@ import { useAppContext } from '../context/AppContext'
 
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate()
+  const {image_base_url} = useAppContext()
 
   if (!movie) {
     return null

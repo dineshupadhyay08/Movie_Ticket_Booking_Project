@@ -22,7 +22,7 @@ Users can:
 - Select seats visually
 - Book movie tickets
 - Manage personal bookings
-- Save favorite movies and seens
+- Save favorite movies and 
 
 Admins can:
 

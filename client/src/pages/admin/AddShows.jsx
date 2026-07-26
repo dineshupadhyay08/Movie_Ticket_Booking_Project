@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 const AddShows = () => {
 
-  const {axios,getToken, user} = useAppContext()
+  const {axios, getToken, user, fetchShows} = useAppContext()
 
 
   const currency = import.meta.env.VITE_CURRENCY
@@ -143,7 +143,9 @@ const AddShows = () => {
       setDateTimeSelection({});
       setDateTimeInput("");
       setShowPrice("");
-      fetchNowPlayingMovies();
+      // Keep the public movie list in sync. The dashboard and list pages fetch
+      // on mount, so they will receive the persisted records as well.
+      await Promise.all([fetchShows(), fetchNowPlayingMovies()]);
     } catch (error) {
       console.error("Error adding show:", error);
       toast.error(
@@ -236,6 +238,7 @@ const AddShows = () => {
         <div className="inline-flex gap-5 border border-r-gray-600 p-1 pl-3 rounded-lg">
           <input
             type="datetime-local"
+            min={new Date().toISOString().slice(0, 16)}
             value={dateTimeInput}
             onChange={(e) => setDateTimeInput(e.target.value)}
             className="outline-none rounded-md"

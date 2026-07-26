@@ -8,19 +8,14 @@ import { toast } from "react-toastify";
 const image_base_url = import.meta.env.VITE_IMAGE_BASE_URL;
 
 const resolveApiBaseUrl = () => {
-  
-  const envBaseUrl = import.meta.env.VITE_BASE_URL?.trim();
-  
-
-  if (typeof window !== "undefined") {
-    const { hostname } = window.location;
-
-    if (hostname === "localhost" || hostname === "127.0.0.1") {
-      return "http://localhost:3000";
-    }
-  }
-
-  return envBaseUrl || "http://localhost:3000";
+  // Never override an explicitly configured API URL. The previous localhost
+  // special case made a local frontend call port 3000 even when VITE_BASE_URL
+  // pointed at the intended backend.
+  return (
+    import.meta.env.VITE_API_BASE_URL?.trim() ||
+    import.meta.env.VITE_BASE_URL?.trim() ||
+    "http://localhost:3000"
+  );
 };
 
 const api = axios.create({
@@ -111,6 +106,7 @@ export const AppProvider = ({ children }) => {
     isAdmin,
     shows,
     favoriteMovies,
+    fetchShows,
     fetchFavoriteMovies,
     image_base_url
   };

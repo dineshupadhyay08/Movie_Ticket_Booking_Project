@@ -24,23 +24,60 @@ export const addShow = async (req, res) => {
     const { moviesId, showsInput, showPrice } = req.body;
 
     if (!moviesId) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "Movie id is required.",
       });
     }
 
     if (!Array.isArray(showsInput) || showsInput.length === 0) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "At least one show date and time is required.",
       });
     }
 
     if (!showPrice || Number(showPrice) <= 0) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "A valid show price is required.",
+      });
+    }
+
+    // Validate every requested show before creating a Movie document. This
+    // prevents an invalid/past submission from leaving partial data behind.
+    const now = new Date();
+    const showToCreate = [];
+    for (const show of showsInput) {
+      if (!show?.date || !Array.isArray(show.time)) {
+        return res.status(400).json({
+          success: false,
+          message: "Each show must include a date and one or more times.",
+        });
+      }
+
+      for (const time of show.time) {
+        const showDateTime = new Date(`${show.date}T${time}`);
+        if (Number.isNaN(showDateTime.getTime()) || showDateTime <= now) {
+          return res.status(400).json({
+            success: false,
+            message: "Show times must be valid future dates and times.",
+          });
+        }
+
+        showToCreate.push({
+          movies: String(moviesId),
+          showDateTime,
+          showPrice: Number(showPrice),
+          occupiedSeats: {},
+        });
+      }
+    }
+
+    if (showToCreate.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No valid show times were provided.",
       });
     }
 
@@ -75,48 +112,26 @@ export const addShow = async (req, res) => {
       movie = await Movie.create(movieDetails);
     }
 
-    const showToCreate = [];
-    showsInput.forEach((show) => {
-      const showDate = show.date;
-      show.time.forEach((time) => {
-        const dateTimeString = `${showDate}T${time}`;
-        showToCreate.push({
-          movies: moviesId,
-          showDateTime: new Date(dateTimeString),
-          showPrice,
-          occupiedSeats: {},
-        });
-      });
-    });
-
-    if (showToCreate.length === 0) {
-      return res.json({
-        success: false,
-        message: "No valid show times were provided.",
-      });
-    }
-
-    await Show.insertMany(showToCreate);
-    res.json({
+    const createdShows = await Show.insertMany(showToCreate, { ordered: true });
+    return res.status(201).json({
       success: true,
       message: "Shows added successfully",
+      createdCount: createdShows.length,
+      shows: createdShows,
     });
   } catch (error) {
-    console.log(error);
-    res.json({
+    console.error("Failed to add shows:", error);
+    return res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Unable to add shows. Please try again.",
     });
   }
 };
 
 export const getShows = async (req, res) => {
   try {
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
-
     const shows = await Show.find({
-      showDateTime: { $gte: today },
+      showDateTime: { $gte: new Date() },
     });
 
     const movieIds = [...new Set(shows.map((show) => show.movies))];

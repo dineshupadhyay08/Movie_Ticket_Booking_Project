@@ -5,7 +5,7 @@ import { ArrowRightIcon, ClockIcon } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router'
 import isoTimeFormat from '../lib/isoTimeFormat'
 import BlurCircle from '../components/BlurCircle'
-import toast from 'react-hot-toast'
+import { toast } from 'react-toastify'
 import { useAppContext } from '../context/AppContext'
 
 const SeatLayout = () => {
@@ -38,6 +38,10 @@ const SeatLayout = () => {
       return toast.error("Please select time first");
     }
 
+    if (occupiedSeats.includes(seatId)) {
+      return toast.error("This seat is already booked");
+    }
+
     if (!selectedSeats.includes(seatId) && selectedSeats.length >= 5) {
       return toast.error("You can only select 5 seats");
     }
@@ -60,6 +64,7 @@ const SeatLayout = () => {
               <button
                 key={seatId}
                 onClick={() => handleSeatClick(seatId)}
+                disabled={occupiedSeats.includes(seatId)}
                 className={`h-8 w-8 rounded border border-primary/60 cursor-pointer 
                   ${
                   selectedSeats.includes(seatId) ? "bg-primary text-white" : ""
@@ -77,7 +82,7 @@ const SeatLayout = () => {
   const getOccupiedSeats = async () =>{
     try {
       const { data } = await axios.get(
-        `/api/bookings/occupied-seats/${selectedTime.showId}`,
+        `/api/bookings/seats/${selectedTime.showId}`,
       );
       if(data.success){
         setOccupiedSeats(data.occupiedSeats);
@@ -96,12 +101,17 @@ const SeatLayout = () => {
       
         if(!selectedTime) return toast.error("Please select time first")
 
-        const {data} = await axios.post('/api/booking/create',{showId:selectedTime.showId, selectedSeats},{headers:{Authorization:`Bearer ${getToken()}`}})
+        if(selectedSeats.length === 0) return toast.error("Please select at least one seat")
+
+        const token = await getToken()
+        const {data} = await axios.post('/api/bookings/create',{showId:selectedTime.showId, selectedSeats},{headers:{Authorization:`Bearer ${token}`}})
 
         if(data.success){
           toast.success(data.message)
           navigate("/my-bookings")
 
+        }else{
+          toast.error(data.message)
         }
 
     } catch (error) {
@@ -135,7 +145,10 @@ const SeatLayout = () => {
                   ? "bg-primary text-white"
                   : "hover:bg-primary/20"
               }`}
-              onClick={() => setSelectedTime(time)}
+              onClick={() => {
+                setSelectedTime(time)
+                setSelectedSeats([])
+              }}
             >
               <ClockIcon className="w-4 h-4" />
               <p className="text-sm">{isoTimeFormat(time.time)}</p>
@@ -162,7 +175,7 @@ const SeatLayout = () => {
           </div>
         </div>
         <button
-          onClick={() => navigate("/my-bookings")}
+          onClick={bookingTickets}
           className="flex items-center gap-1 mt-20 px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer active:scale-95"
         >
           Proceed to Checkout

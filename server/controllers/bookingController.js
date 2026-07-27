@@ -1,11 +1,12 @@
+import Booking from "../models/Booking.js";
 import Show from "../models/Show.js"
 
-const checkSeatsAvailability = async (req, res) => {
+const checkSeatsAvailability = async (showId, selectedSeats) => {
   try{
     const showData = await Show.findById(showId)
     if(!showData)return false;
 
-    const occupiedSeats = showData.occupiedSeats;
+    const occupiedSeats = showData.occupiedSeats || {};
 
     const isAnySeatTaken = selectedSeats.some(seat => occupiedSeats[seat]);
 
@@ -22,7 +23,20 @@ export const createBooking = async(req,res)=>{
     try{
        const {userId} = req.auth();
        const {showId, selectedSeats} = req.body;
-       const {origin} = req.headers;
+
+       if (!userId) {
+        return res.status(401).json({
+          success: false,
+          message: "Please login to book tickets",
+        });
+       }
+
+       if (!showId || !Array.isArray(selectedSeats) || selectedSeats.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: "Please select at least one seat",
+        });
+       }
 
        const isAvilable = await checkSeatsAvailability(showId, selectedSeats);
        if(!isAvilable){
@@ -32,7 +46,14 @@ export const createBooking = async(req,res)=>{
           })
        }
 
-       const showData = await Show.findById(showId).populate("movies");
+       const showData = await Show.findById(showId);
+
+       if (!showData) {
+        return res.status(404).json({
+          success: false,
+          message: "Show not found",
+        });
+       }
 
        const booking = await Booking.create({
         user:userId,
@@ -41,13 +62,15 @@ export const createBooking = async(req,res)=>{
         bookedSeats: selectedSeats,
        })
 
-       selectedSeats.map((seat)=>{
+       showData.occupiedSeats = showData.occupiedSeats || {};
+
+       selectedSeats.forEach((seat)=>{
         showData.occupiedSeats[seat] = userId;
        })
 
        showData.markModified("occupiedSeats");
 
-       await showDate.save();
+       await showData.save();
        res.json({
         success: true,
         message: "Booking created successfully",
@@ -68,9 +91,17 @@ export const getOccupiedSeats = async(req,res)=>{
   try{
     const {showId} = req.params;
     const showData = await Show.findById(showId);
+
+    if (!showData) {
+      return res.status(404).json({
+        success: false,
+        message: "Show not found",
+      });
+    }
+
     const occupiedSeats = Object.keys(showData.occupiedSeats);
 
-    res.jso({
+    res.json({
       success: true,
       occupiedSeats,
     })

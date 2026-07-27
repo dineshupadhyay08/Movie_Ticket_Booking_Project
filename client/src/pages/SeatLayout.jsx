@@ -60,10 +60,11 @@ const SeatLayout = () => {
               <button
                 key={seatId}
                 onClick={() => handleSeatClick(seatId)}
-                className={`h-8 w-8 rounded border border-primary/60 cursor-pointer ${
+                className={`h-8 w-8 rounded border border-primary/60 cursor-pointer 
+                  ${
                   selectedSeats.includes(seatId) ? "bg-primary text-white" : ""
-                }`}
-              >
+                }
+                ${occupiedSeats.includes(seatId) && "opacity-50"} `}>
                 {seatId}
               </button>
             );
@@ -89,6 +90,26 @@ const SeatLayout = () => {
     }
   }
 
+  const bookingTickets = async()=>{
+    try {
+      if(!user)return toast.error("Please Login to Procee")
+      
+        if(!selectedTime) return toast.error("Please select time first")
+
+        const {data} = await axios.post('/api/booking/create',{showId:selectedTime.showId, selectedSeats},{headers:{Authorization:`Bearer ${getToken()}`}})
+
+        if(data.success){
+          toast.success(data.message)
+          navigate("/my-bookings")
+
+        }
+
+    } catch (error) {
+      toast.error(error.message)
+      
+    }
+  }
+
 
   useEffect(() => {
     getShow()
@@ -99,6 +120,8 @@ const SeatLayout = () => {
       getOccupiedSeats()
     }
   }, [selectedTime])
+
+
   return show ? (
     <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">
       <div className="w-60 bg-primary/10 border-primary/20 rounded-lg py-10 h-max md:sticky md:to-pink-30">

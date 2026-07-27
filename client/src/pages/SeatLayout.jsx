@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router'
 import isoTimeFormat from '../lib/isoTimeFormat'
 import BlurCircle from '../components/BlurCircle'
 import toast from 'react-hot-toast'
+import { useAppContext } from '../context/AppContext'
 
 const SeatLayout = () => {
 
@@ -17,19 +18,20 @@ const SeatLayout = () => {
   const [selectedSeats, setSelectedSeats] = useState([])
   const [selectedTime, setSelectedTime] = useState(null)
   const [show, setShow] = useState(null)
+  const [occupiedSeats, setOccupiedSeats] = useState([])
+
+  const {axios,getToken, user} = useAppContext()
 
   const getShow = async () => {
-    const foundShow = dummyShowsData.find((item) => item._id === id)
-
-    if (foundShow) {
-      setShow({
-        movie: foundShow,
-        dateTime: dummyDateTimeData,
-      })
-    } else {
-      setShow(null)
-    }
+     try {
+      const {data} = await axios.get(`/api/shows/${id}`)
+      if(data.success)
+        setShow(data)
+     } catch (error) {
+      console.log(error)
+     }
   }
+  console.log("use Params",useParams());
 
   const handleSeatClick = (seatId) => {
     if (!selectedTime) {
@@ -71,10 +73,32 @@ const SeatLayout = () => {
     );
   };
 
+  const getOccupiedSeats = async () =>{
+    try {
+      const { data } = await axios.get(
+        `/api/bookings/occupied-seats/${selectedTime.showId}`,
+      );
+      if(data.success){
+        setOccupiedSeats(data.occupiedSeats);
+      }else{
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
+
+
   useEffect(() => {
     getShow()
   }, [id])
 
+  useEffect(()=>{
+    if(selectedTime){
+      getOccupiedSeats()
+    }
+  }, [selectedTime])
   return show ? (
     <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">
       <div className="w-60 bg-primary/10 border-primary/20 rounded-lg py-10 h-max md:sticky md:to-pink-30">

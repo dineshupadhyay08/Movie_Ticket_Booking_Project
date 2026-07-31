@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { dummyBookingData } from '../../assets/assets'
 import Loading from '../../components/Loading'
 import Title from '../../components/Admin/Title'
 import { dateFormat } from '../../lib/dateFormat'
@@ -22,8 +21,6 @@ const ListBookings = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      console.log(data);
 
       if (data.success) {
         setBookings(data.bookings || []);
@@ -59,18 +56,26 @@ const ListBookings = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings.map((item, index) => (
+            {bookings.map((item) => (
               <tr
-                key={index}
+                key={item._id}
                 className="border-b border-primary/20 bg-primary/5 even:bg-primary/10"
               >
-                <td className="p-2 min-w-45 pl-5">{item.user.name}</td>
-                <td className="p-2">{item.show.movie.title}</td>
-                <td className="p-2">{dateFormat(item.show.showDateTIME)}</td>
+                <td className="p-2 min-w-45 pl-5">
+                  {item.user?.name || "Deleted user"}
+                </td>
                 <td className="p-2">
-                  {Object.keys(item.bookedSeats)
-                    .map((seat) => item.bookedSeats[seat])
-                    .join(", ")}
+                  {item.show?.movie?.title || "Movie unavailable"}
+                </td>
+                <td className="p-2">
+                  {item.show?.showDateTime
+                    ? dateFormat(item.show.showDateTime)
+                    : "Show unavailable"}
+                </td>
+                <td className="p-2">
+                  {Array.isArray(item.bookedSeats)
+                    ? item.bookedSeats.join(", ")
+                    : "-"}
                 </td>
                 <td className="p-2">
                   {currency}

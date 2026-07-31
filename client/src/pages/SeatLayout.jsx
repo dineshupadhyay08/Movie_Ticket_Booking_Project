@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { assets, dummyDateTimeData, dummyShowsData } from '../assets/assets'
+import { assets } from '../assets/assets'
 import Loading from '../components/Loading'
 import { ArrowRightIcon, ClockIcon } from 'lucide-react'
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router-dom'
 import isoTimeFormat from '../lib/isoTimeFormat'
 import BlurCircle from '../components/BlurCircle'
 import { toast } from 'react-toastify'
@@ -24,11 +24,15 @@ const SeatLayout = () => {
 
   const getShow = async () => {
      try {
-      const {data} = await axios.get(`/api/shows/${id}`)
-      if(data.success)
-        setShow(data)
+      const { data: response } = await axios.get(`/api/shows/${id}`)
+      if(response.success) {
+        setShow(response)
+      } else {
+        toast.error(response.message)
+      }
      } catch (error) {
-      console.log(error)
+      // console.log(error)
+      toast.error(error.message)
      }
   }
   console.log("use Params",useParams());

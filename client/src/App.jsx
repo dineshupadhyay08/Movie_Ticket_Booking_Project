@@ -16,6 +16,7 @@ import ListBookings from "./pages/admin/ListBookings";
 import Dashbooard from "./pages/admin/Dashbooard";
 import Loading from "./components/Loading";
 import { SignIn, useUser } from "@clerk/react";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/movies/:id" element={<MoviesDetails />} />
           <Route path="/movies/:id/:data" element={<SeatLayout />} />
           <Route path="/my-bookings" element={<MyBookings />} />
+          <Route path="/loading/:nextUrl" element={<Loading />} />
           <Route path="/favorites" element={<Favorite />} />
           <Route
             path="/admin/*"

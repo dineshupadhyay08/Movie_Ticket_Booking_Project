@@ -76,22 +76,23 @@ export const getAllBookings = async (req, res) => {
   try {
     const bookingsRaw = await Booking.find({})
       .sort({ createdAt: -1 })
+      .populate("user", "name email image")
+      .populate({
+        path: "show",
+        populate: {
+          path: "movies",
+        },
+      })
       .lean();
-
-    const showIds = [...new Set(bookingsRaw.map((booking) => booking.show).filter(Boolean))];
-    const userIds = [...new Set(bookingsRaw.map((booking) => booking.user).filter(Boolean))];
-
-    const showsRaw = await Show.find({ _id: { $in: showIds } }).lean();
-    const shows = await attachMoviesToShows(showsRaw);
-    const showMap = new Map(shows.map((show) => [String(show._id), show]));
-
-    const users = await User.find({ _id: { $in: userIds } }).lean();
-    const userMap = new Map(users.map((user) => [user._id, user]));
 
     const bookings = bookingsRaw.map((booking) => ({
       ...booking,
-      show: showMap.get(booking.show) || null,
-      user: userMap.get(booking.user) || null,
+      show: booking.show
+        ? {
+            ...booking.show,
+            movie: booking.show.movies || null,
+          }
+        : null,
     }));
 
     res.json({ success: true, bookings });

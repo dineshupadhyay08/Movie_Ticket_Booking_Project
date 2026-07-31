@@ -67,6 +67,8 @@ const MoviesDetails = () => {
     return () => controller.abort();
   }, [id, axios]);
 
+  // console.log("dateTime =", dateTime);
+
   const scrollToDateSection = () => {
     document.getElementById("dateSelect")?.scrollIntoView({
       behavior: "smooth",

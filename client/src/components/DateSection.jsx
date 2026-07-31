@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import BlurCircle from './BlurCircle'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const DateSection = ({dateTime, id}) => {
   const navigate = useNavigate()
@@ -10,13 +10,17 @@ const DateSection = ({dateTime, id}) => {
   const [selected,setSelected] = useState(null)
 
   const onBookHandler = () =>{
+    console.log("Selected Date",selected)
     if(!selected){
-      return toast('Please select a date')
+      return toast.error('Please select a date')
     }
     navigate(`/movies/${id}/${selected}`)
     scrollTo(0,0)
 
   }
+
+  console.log("dateTime props =", dateTime);
+  console.log("keys =", Object.keys(dateTime));
 
   return (
     <div>

@@ -5,7 +5,9 @@ import { useAuth, useUser } from "@clerk/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const image_base_url = import.meta.env.VITE_IMAGE_BASE_URL;
+const image_base_url =
+  import.meta.env.VITE_IMAGE_BASE_URL?.trim() ||
+  "https://image.tmdb.org/t/p/original";
 
 const resolveApiBaseUrl = () => {
   // Never override an explicitly configured API URL. The previous localhost

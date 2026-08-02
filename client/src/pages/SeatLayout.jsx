@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import Loading from '../components/Loading'
 import { ArrowRightIcon, ClockIcon } from 'lucide-react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import isoTimeFormat from '../lib/isoTimeFormat'
 import BlurCircle from '../components/BlurCircle'
 import { toast } from 'react-toastify'
@@ -11,8 +11,6 @@ import { useAppContext } from '../context/AppContext'
 const SeatLayout = () => {
 
   const groupRows = [["A","B"], ["C", "D"],["E","F"],["G","H"],["I","J"]]
-
-  const navigate = useNavigate();
 
   const { id, data } = useParams()
   const [selectedSeats, setSelectedSeats] = useState([])
@@ -110,11 +108,9 @@ const SeatLayout = () => {
         const token = await getToken()
         const {data} = await axios.post('/api/bookings/create',{showId:selectedTime.showId, selectedSeats},{headers:{Authorization:`Bearer ${token}`}})
 
-        if(data.success){
-          toast.success(data.message)
-          navigate("/my-bookings")
-
-        }else{
+        if(data.success && data.url){
+          window.location.assign(data.url)
+        } else {
           toast.error(data.message)
         }
 

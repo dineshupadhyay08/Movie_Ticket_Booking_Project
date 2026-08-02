@@ -8,6 +8,7 @@ import { serve } from "inngest/express";
 import { inngest, functions } from "./Inngest/index.js";
 import showRouter from "./routes/showRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
+import { stripeWebhook } from "./controllers/bookingController.js";
 import adminRouter from "./routes/adminRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 
@@ -16,6 +17,11 @@ const Port = 3000;
 
 await connectDB();
 
+app.post(
+  "/api/bookings/webhook",
+  express.raw({ type: "application/json" }),
+  stripeWebhook,
+);
 
 app.use(express.json());
 app.use(cors());

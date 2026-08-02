@@ -2,6 +2,8 @@ import Booking from "../models/Booking.js";
 import Show from "../models/Show.js"
 import stripe from "stripe";
 
+const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
+
 const checkSeatsAvailability = async (showId, selectedSeats) => {
   try{
     const showData = await Show.findById(showId)
@@ -21,9 +23,12 @@ const checkSeatsAvailability = async (showId, selectedSeats) => {
 
 
 export const createBooking = async(req,res)=>{
+    let booking;
+
     try{
        const {userId} = req.auth();
        const {showId, selectedSeats} = req.body;
+       const { origin } = req.headers;
 
        if (!userId) {
         return res.status(401).json({
@@ -47,7 +52,7 @@ export const createBooking = async(req,res)=>{
           })
        }
 
-       const showData = await Show.findById(showId);
+       const showData = await Show.findById(showId).populate("movies");
 
        if (!showData) {
         return res.status(404).json({
@@ -56,30 +61,18 @@ export const createBooking = async(req,res)=>{
         });
        }
 
-       const booking = await Booking.create({
+       booking = await Booking.create({
         user:userId,
         show: showId,
         amount: showData.showPrice * selectedSeats.length,
         bookedSeats: selectedSeats,
        })
 
-       showData.occupiedSeats = showData.occupiedSeats || {};
-
-       selectedSeats.forEach((seat)=>{
-        showData.occupiedSeats[seat] = userId;
-       })
-
-       showData.markModified("occupiedSeats");
-
-       await showData.save();
-
-       const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
-
        const line_items = [{
         price_data: {
           currency: 'usd',
           product_data: {
-            name: showData.movie.title,
+            name: showData.movies?.title || "Movie Ticket",
           },
           unit_amount: Math.floor(booking.amount) * 100
         },
@@ -87,22 +80,29 @@ export const createBooking = async(req,res)=>{
        }]
 
        const session = await stripeInstance.checkout.sessions.create({
-        success_url: `${origin}/loading/my-bookings`,
-        cancel_url: `${origin}/loading/my-bookings`,
+        success_url: `${origin}/my-bookings?payment=success&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/my-bookings?payment=cancelled`,
         line_items: line_items,
         mode: 'payment',
         metadata: {
-          bookingId: booking,
+          bookingId: booking._id.toString(),
         },
-        expires_at: Math.floor(Date.now() / 1000) + 15 * 60, // 15 minutes from now
        })
 
        booking.paymentLink = session.url
        await booking.save();
 
-       res.json({success:  true, url: session.url})
+       res.json({
+        success: true,
+        message: "Redirecting to payment...",
+        url: session.url,
+       })
 
     }catch(error){
+      if (booking && !booking.paymentLink) {
+        await Booking.findByIdAndDelete(booking._id);
+      }
+
       console.log(error.message);
       res.json({
         success: false,
@@ -110,6 +110,58 @@ export const createBooking = async(req,res)=>{
       })
     }
 }
+
+export const stripeWebhook = async (req, res) => {
+  const signature = req.headers["stripe-signature"];
+
+  try {
+    const event = stripeInstance.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET,
+    );
+
+    if (event.type === "checkout.session.completed") {
+      const bookingId = event.data.object.metadata?.bookingId;
+
+      if (bookingId) {
+        const booking = await Booking.findById(bookingId);
+
+        if (booking && !booking.isPaid) {
+          const seatUpdates = {};
+          const unavailableSeatFilters = booking.bookedSeats.map((seat) => ({
+            [`occupiedSeats.${seat}`]: { $exists: true },
+          }));
+
+          booking.bookedSeats.forEach((seat) => {
+            seatUpdates[`occupiedSeats.${seat}`] = booking.user;
+          });
+
+          const showData = await Show.findOneAndUpdate(
+            {
+              _id: booking.show,
+              $nor: unavailableSeatFilters,
+            },
+            { $set: seatUpdates },
+            { new: true },
+          );
+
+          if (!showData) {
+            throw new Error("Selected seats are no longer available");
+          }
+
+          booking.isPaid = true;
+          await booking.save();
+        }
+      }
+    }
+
+    res.json({ received: true });
+  } catch (error) {
+    console.log("Stripe webhook error:", error.message);
+    res.status(400).send(`Webhook Error: ${error.message}`);
+  }
+};
 
 
 

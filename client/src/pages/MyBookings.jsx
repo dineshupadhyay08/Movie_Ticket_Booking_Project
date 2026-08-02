@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import BlurCircle from "../components/BlurCircle";
 import { dateFormat } from "../lib/dateFormat";
+import { toast } from "react-toastify";
 import { useAppContext } from "../context/AppContext";
 
 const MyBookings = () => {
@@ -12,6 +13,15 @@ const MyBookings = () => {
   const [error, setError] = useState("");
 
   const { axios, getToken, user, image_base_url } = useAppContext();
+
+  const handlePayment = (paymentLink) => {
+    if (!paymentLink) {
+      toast.error("Payment link is unavailable. Please create a new booking.");
+      return;
+    }
+
+    window.location.assign(paymentLink);
+  };
 
   const getMyBooking = async () => {
     try {
@@ -98,7 +108,11 @@ const MyBookings = () => {
                 </p>
 
                 {!item.isPaid && (
-                  <button className="bg-primary px-4 py-1.5 mb-3 text-sm rounded-full font-medium cursor-pointer">
+                  <button
+                    type="button"
+                    onClick={() => handlePayment(item.paymentLink)}
+                    className="bg-primary px-4 py-1.5 mb-3 text-sm rounded-full font-medium cursor-pointer"
+                  >
                     Pay now
                   </button>
                 )}

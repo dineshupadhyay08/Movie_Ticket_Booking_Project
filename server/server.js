@@ -11,11 +11,14 @@ import bookingRouter from "./routes/bookingRoutes.js";
 import { stripeWebhook } from "./controllers/bookingController.js";
 import adminRouter from "./routes/adminRoutes.js";
 import userRouter from "./routes/userRoutes.js";
+import { stripeWebhooks } from "./controllers/StripeWebhook.js";
 
 const app = express();
 const Port = 3000;
 
 await connectDB();
+
+app.use('/api/stripe',express.raw({type: 'application/json'}),stripeWebhooks);
 
 app.post(
   "/api/bookings/webhook",

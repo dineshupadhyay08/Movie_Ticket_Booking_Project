@@ -2,7 +2,7 @@
 
 A full-stack movie ticket booking application that allows users to browse movies, view show timings, select seats, and book tickets seamlessly.
 
-## 🌐 Live Demo  kajsdl alkdfj
+## 🌐 Live Demo  kajsdl a
 
 🚀 Experience the application live:
 

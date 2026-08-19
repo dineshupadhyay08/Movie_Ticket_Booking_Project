@@ -4,7 +4,7 @@ A full-stack movie ticket booking application that allows users to browse movies
 
 ## 🌐 Live Demo
 
-🚀 Experience the application live: i am alon before
+🚀 Experience the application live: i am alon 
 
 [Movie Ticket Booking Platform](https://movie-ticket-booking-front-end.vercel.app/)
 

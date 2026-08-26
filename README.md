@@ -24,7 +24,7 @@ Users can:
 - Manage personal bookings
 - Save favorite movies
 
-Admins can: know what you
+Admins can: know
 
 - Add new shows
 - Manage movie screenings

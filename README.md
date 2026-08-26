@@ -24,7 +24,7 @@ Users can:
 - Manage personal bookings
 - Save favorite movies
 
-Admins can: know what you want for Christmas and Happy 
+Admins can: know what you want for Christmas an
 
 - Add new shows
 - Manage movie screenings

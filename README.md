@@ -8,7 +8,7 @@ A full-stack movie ticket booking application that allows users to browse movies
 
 [Movie Ticket Booking Platform](https://movie-ticket-booking-front-end.vercel.app/)
 
----  ki koni hove jne thik nhi 
+---  ki koni hove jne thik
 
 ## 📌 Overview
 
